@@ -1,57 +1,44 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/components/useColorScheme';
+import { GameSessionProvider } from '@/src/context/GameSessionContext';
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+const navTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    background: '#070A12',
+    card: '#070A12',
+    border: '#31415E',
+    text: '#F7FAFF',
+    primary: '#25F4EE',
+    notification: '#FF5D73',
+  },
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+    <GameSessionProvider>
+      <ThemeProvider value={navTheme}>
+        <Stack
+          screenOptions={{
+            headerStyle: { backgroundColor: '#070A12' },
+            headerTintColor: '#F7FAFF',
+            contentStyle: { backgroundColor: '#070A12' },
+            headerShadowVisible: false,
+            headerTitleStyle: { fontWeight: '800' },
+          }}
+        >
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="player-setup" options={{ title: 'Spillere' }} />
+          <Stack.Screen name="card-game" options={{ title: 'Kortspill' }} />
+          <Stack.Screen name="wheel-game" options={{ title: 'Spin The Wheel' }} />
+          <Stack.Screen name="guess-song" options={{ title: 'Gjett Sangen' }} />
+          <Stack.Screen name="music-game" options={{ title: 'Music Game' }} />
+          <Stack.Screen name="settings" options={{ title: 'Innstillinger' }} />
+        </Stack>
+      </ThemeProvider>
+    </GameSessionProvider>
   );
 }

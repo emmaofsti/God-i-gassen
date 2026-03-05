@@ -1,0 +1,62 @@
+[
+  {
+    "id": "wheel-1",
+    "label": "Gi 2",
+    "ruleText": "Gi 2 slurker valgfritt."
+  },
+  {
+    "id": "wheel-2",
+    "label": "Ta 2",
+    "ruleText": "Du tar 2 slurker."
+  },
+  {
+    "id": "wheel-3",
+    "label": "Alle 1",
+    "ruleText": "Alle tar 1 slurk."
+  },
+  {
+    "id": "wheel-4",
+    "label": "Utfordring",
+    "ruleText": "Velg en mini-utfordring for spilleren til venstre."
+  },
+  {
+    "id": "wheel-5",
+    "label": "Bytt plass",
+    "ruleText": "Bytt plass med en valgfri spiller."
+  },
+  {
+    "id": "wheel-6",
+    "label": "Regel",
+    "ruleText": "Lag en ny husregel i 2 runder."
+  },
+  {
+    "id": "wheel-7",
+    "label": "Gi 3",
+    "ruleText": "Gi totalt 3 slurker."
+  },
+  {
+    "id": "wheel-8",
+    "label": "Ta 1",
+    "ruleText": "Du tar 1 slurk."
+  },
+  {
+    "id": "wheel-9",
+    "label": "Sosial",
+    "ruleText": "Gi et kompliment til en spiller."
+  },
+  {
+    "id": "wheel-10",
+    "label": "Alle 2",
+    "ruleText": "Alle tar 2 slurker."
+  },
+  {
+    "id": "wheel-11",
+    "label": "Duell",
+    "ruleText": "Stein-saks-papir med valgfri spiller. Taper tar 2."
+  },
+  {
+    "id": "wheel-12",
+    "label": "Skål",
+    "ruleText": "Felles skål - alle tar 1 slurk."
+  }
+]

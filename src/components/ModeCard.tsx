@@ -1,0 +1,103 @@
+import { LinearGradient } from 'expo-linear-gradient';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+
+import { theme } from '@/src/constants/theme';
+import { GameMode } from '@/src/types/game';
+
+type Props = {
+  title: string;
+  subtitle: string;
+  mode: GameMode;
+  selectedMode: GameMode;
+  onSelect: (mode: GameMode) => void;
+};
+
+const modeTag: Record<GameMode, string> = {
+  cards: 'CLASSIC',
+  wheel: 'RANDOM',
+  'guess-song': 'VOICE',
+  music: 'SPOTIFY',
+};
+
+export function ModeCard({ title, subtitle, mode, selectedMode, onSelect }: Props) {
+  const selected = selectedMode === mode;
+
+  return (
+    <Pressable onPress={() => onSelect(mode)} style={({ pressed }) => [pressed && styles.pressed]}>
+      <View style={[styles.cardShell, selected && styles.cardShellSelected]}>
+        {selected ? <LinearGradient colors={theme.gradients.selectedCard} style={StyleSheet.absoluteFillObject} /> : null}
+        <View style={styles.headerRow}>
+          <View style={styles.tagWrap}>
+            <Text style={styles.tag}>{modeTag[mode]}</Text>
+          </View>
+          <View style={[styles.dot, selected && styles.dotSelected]} />
+        </View>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
+      </View>
+    </Pressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  pressed: {
+    opacity: 0.9,
+  },
+  cardShell: {
+    overflow: 'hidden',
+    borderRadius: theme.radius.lg,
+    backgroundColor: '#11192A99',
+    borderColor: '#34436177',
+    borderWidth: 1,
+    padding: theme.spacing.md,
+    gap: theme.spacing.sm,
+  },
+  cardShellSelected: {
+    borderColor: '#7BE9FFAA',
+    shadowColor: '#2CF4EC',
+    shadowOpacity: 0.25,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 0 },
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  tagWrap: {
+    borderRadius: theme.radius.pill,
+    backgroundColor: '#203252BB',
+    borderWidth: 1,
+    borderColor: '#5B8ED944',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+  },
+  tag: {
+    color: '#8FB8FF',
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+  title: {
+    color: theme.colors.text,
+    fontSize: 21,
+    fontWeight: '900',
+    letterSpacing: 0.4,
+  },
+  subtitle: {
+    color: theme.colors.mutedText,
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  dot: {
+    width: 16,
+    height: 16,
+    borderRadius: theme.radius.pill,
+    borderWidth: 2,
+    borderColor: '#6D82AC',
+  },
+  dotSelected: {
+    backgroundColor: theme.colors.accent,
+    borderColor: theme.colors.accent,
+  },
+});
