@@ -32,7 +32,6 @@ import {
   SpotifyPlaylist,
   SpotifyUser,
   SpotifyWebPkceSession,
-  toStoredAuthFromTokenPayload,
 } from '@/src/music/spotify';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -42,7 +41,6 @@ export default function GuessSongScreen() {
   const { players } = useGameSession();
 
   const clientId = getSpotifyClientId();
-  const authRequestClientId = clientId || 'missing-client-id';
   const redirectUri = useMemo(() => {
     if (Platform.OS === 'web') {
       if (typeof window !== 'undefined') {
@@ -66,17 +64,6 @@ export default function GuessSongScreen() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
-
-  const [request, response, promptAsync] = AuthSession.useAuthRequest(
-    {
-      clientId: authRequestClientId,
-      redirectUri,
-      scopes: spotifyScopes,
-      responseType: AuthSession.ResponseType.Code,
-      usePKCE: true,
-    },
-    spotifyDiscovery
-  );
 
   const ensureFreshAuth = useCallback(async () => {
     if (!authState) {
@@ -133,72 +120,6 @@ export default function GuessSongScreen() {
       mounted = false;
     };
   }, [clientId]);
-
-  useEffect(() => {
-    if (Platform.OS === 'web') {
-      return;
-    }
-
-    if (!response || response.type !== 'success' || !response.params.code) {
-      return;
-    }
-
-    let mounted = true;
-
-    const finishAuth = async () => {
-      if (!request?.codeVerifier || !clientId) {
-        setErrorMessage('Innlogging feilet: mangler PKCE-verifier eller Client ID.');
-        return;
-      }
-
-      setIsConnecting(true);
-      setErrorMessage(null);
-
-      try {
-        const tokenResult = await AuthSession.exchangeCodeAsync(
-          {
-            clientId,
-            code: response.params.code,
-            redirectUri,
-            extraParams: {
-              code_verifier: request.codeVerifier,
-            },
-          },
-          spotifyDiscovery
-        );
-
-        const nextAuth = toStoredAuthFromTokenPayload(
-          {
-            accessToken: tokenResult.accessToken,
-            tokenType: tokenResult.tokenType,
-            expiresIn: tokenResult.expiresIn,
-            refreshToken: tokenResult.refreshToken,
-          },
-          authState?.refreshToken
-        );
-
-        await saveSpotifyAuth(nextAuth);
-        if (mounted) {
-          setAuthState(nextAuth);
-          setInfoMessage('Spotify er koblet til.');
-        }
-      } catch (error) {
-        if (mounted) {
-          setErrorMessage(error instanceof Error ? error.message : 'Spotify-innlogging feilet.');
-        }
-      } finally {
-        if (mounted) {
-          setIsConnecting(false);
-        }
-      }
-    };
-
-    void finishAuth();
-
-    return () => {
-      mounted = false;
-    };
-  }, [authState?.refreshToken, clientId, redirectUri, request?.codeVerifier, response]);
 
   useEffect(() => {
     if (Platform.OS !== 'web' || !clientId || typeof window === 'undefined') {
@@ -316,56 +237,41 @@ export default function GuessSongScreen() {
   }, [authState, clientId, ensureFreshAuth]);
 
   const connectSpotify = async () => {
-    if (Platform.OS === 'web' && typeof window !== 'undefined') {
-      if (!clientId) {
-        setErrorMessage('Mangler EXPO_PUBLIC_SPOTIFY_CLIENT_ID.');
-        return;
-      }
-
-      try {
-        setErrorMessage(null);
-        setInfoMessage(null);
-        setIsConnecting(true);
-
-        const pkce = await createSpotifyWebPkceSession();
-        window.sessionStorage.setItem(
-          SPOTIFY_WEB_PKCE_STORAGE_KEY,
-          JSON.stringify({
-            codeVerifier: pkce.codeVerifier,
-            state: pkce.state,
-          } satisfies SpotifyWebPkceSession)
-        );
-
-        const authUrl = buildSpotifyAuthorizationUrl({
-          clientId,
-          redirectUri,
-          scopes: spotifyScopes,
-          codeChallenge: pkce.codeChallenge,
-          state: pkce.state,
-        });
-
-        window.location.assign(authUrl);
-        return;
-      } catch (error) {
-        setIsConnecting(false);
-        setErrorMessage(error instanceof Error ? error.message : 'Kunne ikke starte Spotify-innlogging.');
-        return;
-      }
-    }
-
-    if (!request) {
-      setErrorMessage('Spotify-forespørsel er ikke klar enda. Prøv igjen om et sekund.');
+    if (Platform.OS !== 'web' || typeof window === 'undefined') {
+      setErrorMessage('Spotify-weblogin er kun satt opp for web akkurat nå.');
       return;
     }
 
-    setErrorMessage(null);
-    setInfoMessage(null);
-    setIsConnecting(true);
+    if (!clientId) {
+      setErrorMessage('Mangler EXPO_PUBLIC_SPOTIFY_CLIENT_ID.');
+      return;
+    }
 
     try {
-      await promptAsync();
-    } finally {
+      setErrorMessage(null);
+      setInfoMessage(null);
       setIsConnecting(false);
+      const pkce = await createSpotifyWebPkceSession();
+      window.sessionStorage.setItem(
+        SPOTIFY_WEB_PKCE_STORAGE_KEY,
+        JSON.stringify({
+          codeVerifier: pkce.codeVerifier,
+          state: pkce.state,
+        } satisfies SpotifyWebPkceSession)
+      );
+
+      const authUrl = buildSpotifyAuthorizationUrl({
+        clientId,
+        redirectUri,
+        scopes: spotifyScopes,
+        codeChallenge: pkce.codeChallenge,
+        state: pkce.state,
+      });
+
+      window.location.assign(authUrl);
+    } catch (error) {
+      setIsConnecting(false);
+      setErrorMessage(error instanceof Error ? error.message : 'Kunne ikke starte Spotify-innlogging.');
     }
   };
 
@@ -456,7 +362,7 @@ export default function GuessSongScreen() {
             <PrimaryButton
               title={isConnecting ? 'Kobler til...' : user ? 'Koble til på nytt' : 'Koble til Spotify'}
               onPress={connectSpotify}
-              disabled={isConnecting || !request}
+              disabled={isConnecting}
               style={styles.actionButton}
             />
             <SecondaryButton title="Koble fra" onPress={disconnectSpotify} style={styles.actionButton} />
