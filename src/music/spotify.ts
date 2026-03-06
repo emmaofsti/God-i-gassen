@@ -14,6 +14,8 @@ export const spotifyScopes = [
   'playlist-read-collaborative',
 ];
 
+export const SPOTIFY_WEB_PKCE_STORAGE_KEY = '@godigassen/spotify-web-pkce';
+
 export type SpotifyAuthState = {
   accessToken: string;
   tokenType: string;
@@ -48,6 +50,11 @@ type SpotifyTokenPayload = {
   token_type: string;
   expires_in: number;
   refresh_token?: string;
+};
+
+export type SpotifyWebPkceSession = {
+  codeVerifier: string;
+  state: string;
 };
 
 type SpotifyPlaylistTrackResponse = {
@@ -104,6 +111,27 @@ async function postSpotifyToken(
   }
 
   return (await response.json()) as SpotifyTokenPayload;
+}
+
+function randomString(length: number): string {
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+  const bytes = globalThis.crypto.getRandomValues(new Uint8Array(length));
+  let result = '';
+
+  for (const value of bytes) {
+    result += alphabet[value % alphabet.length];
+  }
+
+  return result;
+}
+
+function base64UrlEncode(bytes: Uint8Array): string {
+  let binary = '';
+  for (const value of bytes) {
+    binary += String.fromCharCode(value);
+  }
+
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
 }
 
 async function spotifyFetch<T>(accessToken: string, path: string): Promise<T> {
@@ -237,4 +265,54 @@ export function toStoredAuthFromTokenPayload(
     expiresAt: Date.now() + (payload.expiresIn ?? 3600) * 1000,
     refreshToken: payload.refreshToken ?? previousRefreshToken,
   };
+}
+
+export async function createSpotifyWebPkceSession(): Promise<SpotifyWebPkceSession & { codeChallenge: string }> {
+  const codeVerifier = randomString(64);
+  const state = randomString(24);
+  const digest = await globalThis.crypto.subtle.digest('SHA-256', new TextEncoder().encode(codeVerifier));
+  const codeChallenge = base64UrlEncode(new Uint8Array(digest));
+
+  return {
+    codeVerifier,
+    state,
+    codeChallenge,
+  };
+}
+
+export function buildSpotifyAuthorizationUrl(input: {
+  clientId: string;
+  redirectUri: string;
+  scopes: string[];
+  codeChallenge: string;
+  state: string;
+}): string {
+  const params = new URLSearchParams({
+    client_id: input.clientId,
+    response_type: 'code',
+    redirect_uri: input.redirectUri,
+    code_challenge_method: 'S256',
+    code_challenge: input.codeChallenge,
+    state: input.state,
+    scope: input.scopes.join(' '),
+  });
+
+  return `${spotifyDiscovery.authorizationEndpoint}?${params.toString()}`;
+}
+
+export async function exchangeSpotifyCodeForToken(input: {
+  clientId: string;
+  code: string;
+  redirectUri: string;
+  codeVerifier: string;
+}): Promise<SpotifyAuthState> {
+  const payload = await postSpotifyToken({
+    client_id: input.clientId,
+    grant_type: 'authorization_code',
+    code: input.code,
+    redirect_uri: input.redirectUri,
+    code_verifier: input.codeVerifier,
+  });
+
+  return normalizeTokenPayload(payload);
 }

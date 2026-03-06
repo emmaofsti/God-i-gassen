@@ -13,8 +13,11 @@ import { theme } from '@/src/constants/theme';
 import { useGameSession } from '@/src/context/GameSessionContext';
 import { createMusicRound, MusicRound } from '@/src/game/musicEngine';
 import {
+  buildSpotifyAuthorizationUrl,
   clearSpotifyAuth,
+  createSpotifyWebPkceSession,
   ensureSpotifyAuth,
+  exchangeSpotifyCodeForToken,
   fetchSpotifyPlaylistTracks,
   fetchSpotifyPlaylists,
   fetchSpotifyUser,
@@ -22,11 +25,13 @@ import {
   loadSpotifyAuth,
   pickRandomSpotifyTrack,
   saveSpotifyAuth,
+  SPOTIFY_WEB_PKCE_STORAGE_KEY,
   spotifyDiscovery,
   spotifyScopes,
   SpotifyAuthState,
   SpotifyPlaylist,
   SpotifyUser,
+  SpotifyWebPkceSession,
   toStoredAuthFromTokenPayload,
 } from '@/src/music/spotify';
 
@@ -130,6 +135,10 @@ export default function GuessSongScreen() {
   }, [clientId]);
 
   useEffect(() => {
+    if (Platform.OS === 'web') {
+      return;
+    }
+
     if (!response || response.type !== 'success' || !response.params.code) {
       return;
     }
@@ -192,6 +201,70 @@ export default function GuessSongScreen() {
   }, [authState?.refreshToken, clientId, redirectUri, request?.codeVerifier, response]);
 
   useEffect(() => {
+    if (Platform.OS !== 'web' || !clientId || typeof window === 'undefined') {
+      return;
+    }
+
+    const code = new URLSearchParams(window.location.search).get('code');
+    const state = new URLSearchParams(window.location.search).get('state');
+    if (!code) {
+      return;
+    }
+
+    let mounted = true;
+
+    const finishWebAuth = async () => {
+      setIsConnecting(true);
+      setErrorMessage(null);
+
+      try {
+        const raw = window.sessionStorage.getItem(SPOTIFY_WEB_PKCE_STORAGE_KEY);
+        if (!raw) {
+          throw new Error('Mangler Spotify PKCE-session. Start Spotify-innlogging på nytt.');
+        }
+
+        const pkce = JSON.parse(raw) as SpotifyWebPkceSession;
+        if (!pkce.codeVerifier || !pkce.state) {
+          throw new Error('Spotify PKCE-session er ugyldig. Start innlogging på nytt.');
+        }
+        if (state !== pkce.state) {
+          throw new Error('Spotify state matcher ikke. Start innlogging på nytt.');
+        }
+
+        const nextAuth = await exchangeSpotifyCodeForToken({
+          clientId,
+          code,
+          redirectUri,
+          codeVerifier: pkce.codeVerifier,
+        });
+
+        await saveSpotifyAuth(nextAuth);
+        window.sessionStorage.removeItem(SPOTIFY_WEB_PKCE_STORAGE_KEY);
+        window.history.replaceState({}, '', '/guess-song');
+
+        if (mounted) {
+          setAuthState(nextAuth);
+          setInfoMessage('Spotify er koblet til.');
+        }
+      } catch (error) {
+        if (mounted) {
+          setErrorMessage(error instanceof Error ? error.message : 'Spotify-innlogging feilet.');
+        }
+      } finally {
+        if (mounted) {
+          setIsConnecting(false);
+        }
+      }
+    };
+
+    void finishWebAuth();
+
+    return () => {
+      mounted = false;
+    };
+  }, [clientId, redirectUri]);
+
+  useEffect(() => {
     if (!authState || !clientId) {
       setUser(null);
       setPlaylists([]);
@@ -243,6 +316,43 @@ export default function GuessSongScreen() {
   }, [authState, clientId, ensureFreshAuth]);
 
   const connectSpotify = async () => {
+    if (Platform.OS === 'web' && typeof window !== 'undefined') {
+      if (!clientId) {
+        setErrorMessage('Mangler EXPO_PUBLIC_SPOTIFY_CLIENT_ID.');
+        return;
+      }
+
+      try {
+        setErrorMessage(null);
+        setInfoMessage(null);
+        setIsConnecting(true);
+
+        const pkce = await createSpotifyWebPkceSession();
+        window.sessionStorage.setItem(
+          SPOTIFY_WEB_PKCE_STORAGE_KEY,
+          JSON.stringify({
+            codeVerifier: pkce.codeVerifier,
+            state: pkce.state,
+          } satisfies SpotifyWebPkceSession)
+        );
+
+        const authUrl = buildSpotifyAuthorizationUrl({
+          clientId,
+          redirectUri,
+          scopes: spotifyScopes,
+          codeChallenge: pkce.codeChallenge,
+          state: pkce.state,
+        });
+
+        window.location.assign(authUrl);
+        return;
+      } catch (error) {
+        setIsConnecting(false);
+        setErrorMessage(error instanceof Error ? error.message : 'Kunne ikke starte Spotify-innlogging.');
+        return;
+      }
+    }
+
     if (!request) {
       setErrorMessage('Spotify-forespørsel er ikke klar enda. Prøv igjen om et sekund.');
       return;

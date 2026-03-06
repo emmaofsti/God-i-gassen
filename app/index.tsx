@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
-import { useRef, useState } from 'react';
-import { Animated, Easing, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Animated, Easing, Platform, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
 import { BottomDock } from '@/src/components/BottomDock';
 import { ModeCard } from '@/src/components/ModeCard';
@@ -56,6 +56,20 @@ export default function HomeScreen() {
     inputRange: [0, 0.12, 1],
     outputRange: [0, 0.85, 1],
   });
+
+  useEffect(() => {
+    if (Platform.OS !== 'web' || typeof window === 'undefined' || window.location.pathname !== '/') {
+      return;
+    }
+
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    if (!params.get('code')) {
+      return;
+    }
+
+    router.replace(`/guess-song${search}` as '/guess-song');
+  }, [router]);
 
   const navigateToGame = () => {
     setIsBeerSplash(false);
