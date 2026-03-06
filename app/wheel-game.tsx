@@ -6,6 +6,7 @@ import wheelData from '@/data/wheelSegments.json';
 import { PartyLogo } from '@/src/components/PartyLogo';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { ScreenContainer } from '@/src/components/ScreenContainer';
+import { SecondaryButton } from '@/src/components/SecondaryButton';
 import { theme } from '@/src/constants/theme';
 import { useGameSession } from '@/src/context/GameSessionContext';
 import { spinWheelResult } from '@/src/game/wheelEngine';
@@ -23,6 +24,7 @@ export default function WheelGameScreen() {
 
   const [isSpinning, setIsSpinning] = useState(false);
   const [result, setResult] = useState<WheelSegment | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [lastSpinAt, setLastSpinAt] = useState(0);
 
   const rotation = useRef(new Animated.Value(0)).current;
@@ -60,6 +62,8 @@ export default function WheelGameScreen() {
     }).start(() => {
       rotationValue.current = target;
       setResult(spinResult.segment);
+      const randomPlayer = players[Math.floor(Math.random() * players.length)]!;
+      setSelectedPlayer(randomPlayer.name);
       setIsSpinning(false);
     });
   };
@@ -137,12 +141,14 @@ export default function WheelGameScreen() {
         <PrimaryButton title={isSpinning ? 'Spinner...' : 'SPIN'} onPress={onSpin} disabled={isSpinning} />
         {result ? (
           <View style={styles.resultCard}>
+            <Text style={styles.resultPlayerName}>{selectedPlayer}</Text>
             <Text style={styles.resultTitle}>{result.label}</Text>
             <Text style={styles.resultBody}>{result.ruleText}</Text>
           </View>
         ) : (
           <Text style={styles.resultHint}>Ingen resultat ennå. Trykk SPIN.</Text>
         )}
+        <SecondaryButton title="Avslutt" onPress={() => router.replace('/')} />
       </View>
     </ScreenContainer>
   );
@@ -245,6 +251,11 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius.lg,
     padding: theme.spacing.md,
     gap: theme.spacing.xs,
+  },
+  resultPlayerName: {
+    color: theme.colors.accent,
+    fontSize: 28,
+    fontWeight: '900',
   },
   resultTitle: {
     color: theme.colors.text,

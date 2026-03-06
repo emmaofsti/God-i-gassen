@@ -108,7 +108,7 @@ export default function CardGameScreen() {
 
       <View style={styles.actions}>
         <PrimaryButton title="Neste kort" onPress={nextCard} />
-        <SecondaryButton title="Skip" onPress={nextCard} />
+        <SecondaryButton title="Avslutt" onPress={() => router.replace('/')} />
       </View>
     </ScreenContainer>
   );

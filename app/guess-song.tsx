@@ -519,14 +519,12 @@ export default function MusicGameScreen() {
 
       {clientIdMissing ? (
         <View style={styles.infoCard}>
-          <Text style={styles.infoTitle}>Mangler Spotify Client ID</Text>
-          <Text style={styles.infoText}>Sett `EXPO_PUBLIC_SPOTIFY_CLIENT_ID` i `.env.local`.</Text>
-          <Text style={styles.infoText}>Redirect URI i Spotify Dashboard: {redirectUri}</Text>
+          <Text style={styles.infoTitle}>Mangler Spotify-oppsett</Text>
+          <Text style={styles.infoText}>Spotify-integrasjon er ikke konfigurert ennå. Kontakt utvikler.</Text>
         </View>
       ) : (
         <View style={styles.infoCard}>
           <Text style={styles.infoTitle}>{user ? `Tilkoblet: ${user.display_name ?? user.id}` : 'Ikke tilkoblet'}</Text>
-          <Text style={styles.infoText}>Redirect URI: {redirectUri}</Text>
           <View style={styles.actionRow}>
             <PrimaryButton
               title={isConnecting ? 'Kobler til...' : user ? 'Koble til på nytt' : 'Koble til Spotify'}
@@ -612,8 +610,7 @@ export default function MusicGameScreen() {
         </View>
 
         <Text style={styles.meterText}>
-          Status: {isListeningForTrigger ? 'Lytter' : isPreviewPlaying ? 'Spiller' : 'Idle'}
-          {typeof meteringDb === 'number' ? ` | Mic: ${meteringDb.toFixed(1)} dB` : ''}
+          {isListeningForTrigger ? 'Lytter etter rop...' : isPreviewPlaying ? 'Spiller preview...' : 'Klar'}
         </Text>
         {!currentRound ? <Text style={styles.warningText}>Trekk en Spotify-runde først.</Text> : null}
         {currentRound && !currentRound.previewUrl ? (

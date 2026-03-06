@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { PartyLogo } from '@/src/components/PartyLogo';
@@ -7,6 +8,7 @@ import { theme } from '@/src/constants/theme';
 import { useGameSession } from '@/src/context/GameSessionContext';
 
 export default function SettingsScreen() {
+  const router = useRouter();
   const { resetPlayers, players } = useGameSession();
 
   return (
@@ -14,9 +16,12 @@ export default function SettingsScreen() {
       <PartyLogo compact />
       <View style={styles.container}>
         <Text style={styles.title}>Innstillinger</Text>
-        <Text style={styles.body}>Spillere lagres lokalt på enheten (offline) med AsyncStorage.</Text>
+        <Text style={styles.body}>Spillerne dine lagres på denne enheten.</Text>
         <Text style={styles.counter}>Lagrede spillere: {players.length}</Text>
-        <SecondaryButton title="Reset spillere" onPress={resetPlayers} danger />
+        <SecondaryButton title="Slett alle spillere" onPress={resetPlayers} danger />
+      </View>
+      <View style={styles.footer}>
+        <SecondaryButton title="Tilbake" onPress={() => router.back()} />
       </View>
     </ScreenContainer>
   );
@@ -47,5 +52,8 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     fontSize: 16,
     fontWeight: '800',
+  },
+  footer: {
+    marginTop: theme.spacing.md,
   },
 });
