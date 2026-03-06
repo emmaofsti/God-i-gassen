@@ -347,6 +347,113 @@ export default function MusicGameScreen() {
     setErrorMessage(null);
   };
 
+  const stopBecauseTrigger = useCallback(async () => {
+    await stopAudioSession();
+    setTriggerMessage('Lyd registrert. Sangen stoppet umiddelbart.');
+  }, [stopAudioSession]);
+
+  const playPreviewRound = useCallback(
+    async (round: MusicRound) => {
+      if (!round.previewUrl) {
+        setTriggerMessage('Ingen preview tilgjengelig på denne låta.');
+        return;
+      }
+
+      setErrorMessage(null);
+      setTriggerMessage('Starter lytte-modus... rop høyt for å trigge stopp.');
+
+      try {
+        await stopAudioSession();
+
+        const permission = await Audio.requestPermissionsAsync();
+        if (!permission.granted) {
+          setTriggerMessage('Mikrofontillatelse mangler. Tillat mikrofon i appinnstillinger.');
+          return;
+        }
+
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: true,
+          playsInSilentModeIOS: true,
+          shouldDuckAndroid: true,
+          playThroughEarpieceAndroid: false,
+        });
+
+        const recording = new Audio.Recording();
+        await recording.prepareToRecordAsync(recordingOptions);
+        await recording.startAsync();
+        activeRecordingRef.current = recording;
+
+        const { sound } = await Audio.Sound.createAsync(
+          { uri: round.previewUrl },
+          { shouldPlay: true, progressUpdateIntervalMillis: 80 }
+        );
+
+        activeSoundRef.current = sound;
+        setIsPreviewPlaying(true);
+        setIsListeningForTrigger(true);
+        triggerStateRef.current = createInitialSoundTriggerState();
+
+        sound.setOnPlaybackStatusUpdate((status: AVPlaybackStatus) => {
+          if (!status.isLoaded) {
+            return;
+          }
+
+          setIsPreviewPlaying(status.isPlaying);
+
+          if (status.didJustFinish) {
+            void stopAudioSession();
+            setTriggerMessage('Preview ble ferdig før noen trigget stopp.');
+          }
+        });
+
+        pollIntervalRef.current = setInterval(() => {
+          void (async () => {
+            if (pollBusyRef.current) {
+              return;
+            }
+            pollBusyRef.current = true;
+
+            try {
+              const activeRecording = activeRecordingRef.current;
+              if (!activeRecording) {
+                return;
+              }
+
+              const status = await activeRecording.getStatusAsync();
+              if (!status.isRecording) {
+                return;
+              }
+
+              const liveMeter = typeof status.metering === 'number' ? status.metering : -160;
+              setMeteringDb(liveMeter);
+
+              const { nextState, triggered } = evaluateSoundTrigger(
+                triggerStateRef.current,
+                liveMeter
+              );
+
+              triggerStateRef.current = nextState;
+
+              if (triggered) {
+                await stopBecauseTrigger();
+              }
+            } finally {
+              pollBusyRef.current = false;
+            }
+          })();
+        }, SOUND_POLL_MS);
+      } catch (error) {
+        await stopAudioSession();
+        setTriggerMessage(
+          error instanceof Error
+            ? `Lydtrigger feilet: ${error.message}`
+            : 'Lydtrigger feilet. Prøv en ny runde.'
+        );
+      }
+    },
+    [stopAudioSession, stopBecauseTrigger]
+  );
+
   const drawSpotifyRound = async () => {
     if (!selectedPlaylistId) {
       setErrorMessage('Velg en spilleliste først.');
@@ -376,6 +483,10 @@ export default function MusicGameScreen() {
       setCurrentRound(round);
       setTriggerMessage(round.previewUrl ? null : 'Denne låta har ingen preview hos Spotify. Trekk ny runde.');
       setShowReveal(false);
+
+      if (round.previewUrl) {
+        await playPreviewRound(round);
+      }
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'Kunne ikke trekke låt fra Spotify.');
     } finally {
@@ -383,108 +494,18 @@ export default function MusicGameScreen() {
     }
   };
 
-  const stopBecauseTrigger = useCallback(async () => {
-    await stopAudioSession();
-    setTriggerMessage('Lyd registrert. Sangen stoppet umiddelbart.');
-  }, [stopAudioSession]);
-
   const startVoiceStopRound = async () => {
-    if (!currentRound?.previewUrl) {
+    if (!currentRound) {
+      setTriggerMessage('Trekk en Spotify-runde først.');
+      return;
+    }
+
+    if (!currentRound.previewUrl) {
       setTriggerMessage('Ingen preview tilgjengelig på denne låta.');
       return;
     }
 
-    setErrorMessage(null);
-    setTriggerMessage('Starter lytte-modus... rop høyt for å trigge stopp.');
-
-    try {
-      await stopAudioSession();
-
-      const permission = await Audio.requestPermissionsAsync();
-      if (!permission.granted) {
-        setTriggerMessage('Mikrofontillatelse mangler. Tillat mikrofon i appinnstillinger.');
-        return;
-      }
-
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
-        shouldDuckAndroid: true,
-        playThroughEarpieceAndroid: false,
-      });
-
-      const recording = new Audio.Recording();
-      await recording.prepareToRecordAsync(recordingOptions);
-      await recording.startAsync();
-      activeRecordingRef.current = recording;
-
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: currentRound.previewUrl },
-        { shouldPlay: true, progressUpdateIntervalMillis: 80 }
-      );
-
-      activeSoundRef.current = sound;
-      setIsPreviewPlaying(true);
-      setIsListeningForTrigger(true);
-      triggerStateRef.current = createInitialSoundTriggerState();
-
-      sound.setOnPlaybackStatusUpdate((status: AVPlaybackStatus) => {
-        if (!status.isLoaded) {
-          return;
-        }
-
-        setIsPreviewPlaying(status.isPlaying);
-
-        if (status.didJustFinish) {
-          void stopAudioSession();
-          setTriggerMessage('Preview ble ferdig før noen trigget stopp.');
-        }
-      });
-
-      pollIntervalRef.current = setInterval(() => {
-        void (async () => {
-          if (pollBusyRef.current) {
-            return;
-          }
-          pollBusyRef.current = true;
-
-          try {
-            const activeRecording = activeRecordingRef.current;
-            if (!activeRecording) {
-              return;
-            }
-
-            const status = await activeRecording.getStatusAsync();
-            if (!status.isRecording) {
-              return;
-            }
-
-            const liveMeter = typeof status.metering === 'number' ? status.metering : -160;
-            setMeteringDb(liveMeter);
-
-            const { nextState, triggered } = evaluateSoundTrigger(
-              triggerStateRef.current,
-              liveMeter
-            );
-
-            triggerStateRef.current = nextState;
-
-            if (triggered) {
-              await stopBecauseTrigger();
-            }
-          } finally {
-            pollBusyRef.current = false;
-          }
-        })();
-      }, SOUND_POLL_MS);
-    } catch (error) {
-      await stopAudioSession();
-      setTriggerMessage(
-        error instanceof Error
-          ? `Lydtrigger feilet: ${error.message}`
-          : 'Lydtrigger feilet. Prøv en ny runde.'
-      );
-    }
+    await playPreviewRound(currentRound);
   };
 
   const stopRoundManually = async () => {
@@ -562,8 +583,12 @@ export default function MusicGameScreen() {
             </ScrollView>
           )}
 
+          <Text style={styles.mutedText}>
+            Trykk en spilleliste for å velge den. Trykk deretter knappen under for å trekke og spille en tilfeldig preview.
+          </Text>
+
           <PrimaryButton
-            title={isDrawingRound ? 'Trekker låt...' : 'Trekk Spotify-runde'}
+            title={isDrawingRound ? 'Trekker og spiller...' : 'Trekk og spill Spotify-runde'}
             onPress={drawSpotifyRound}
             disabled={isDrawingRound || isLoadingSpotifyData || playlists.length === 0}
           />
@@ -601,7 +626,7 @@ export default function MusicGameScreen() {
 
         <View style={styles.actionRow}>
           <PrimaryButton
-            title={isListeningForTrigger ? 'Lytter...' : 'Start lydtrigger'}
+            title={isListeningForTrigger ? 'Lytter...' : 'Spill preview igjen'}
             onPress={startVoiceStopRound}
             disabled={isListeningForTrigger || !currentRound?.previewUrl}
             style={styles.actionButton}
