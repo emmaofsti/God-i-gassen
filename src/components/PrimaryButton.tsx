@@ -47,17 +47,18 @@ const styles = StyleSheet.create({
   },
   gradient: {
     borderRadius: theme.radius.md,
-    paddingVertical: 16,
+    paddingVertical: 18,
+    paddingHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 58,
+    minHeight: 62,
     borderWidth: 1,
     borderColor: '#DFFFFF66',
   },
   text: {
     color: '#05151C',
     fontWeight: '900',
-    fontSize: 17,
+    fontSize: 18,
     letterSpacing: 0.6,
   },
 });

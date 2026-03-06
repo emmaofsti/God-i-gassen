@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Animated, Easing, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
+import { BottomDock } from '@/src/components/BottomDock';
 import { ModeCard } from '@/src/components/ModeCard';
 import { PartyLogo } from '@/src/components/PartyLogo';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
@@ -112,7 +113,7 @@ export default function HomeScreen() {
         ))}
       </View>
 
-      <View style={styles.footer}>
+      <BottomDock style={styles.footer}>
         {playersReady ? (
           <Text style={styles.playerHint}>{players.length} spillere klare</Text>
         ) : (
@@ -123,7 +124,7 @@ export default function HomeScreen() {
           <SecondaryButton title="Endre spillere" onPress={() => router.push('/player-setup')} />
         ) : null}
         <SecondaryButton title="Innstillinger" onPress={() => router.push('/settings')} />
-      </View>
+      </BottomDock>
 
       {isBeerSplash ? (
         <Pressable style={styles.beerOverlay} onPress={navigateToGame}>
@@ -142,7 +143,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   hero: {
     gap: theme.spacing.sm,
-    marginBottom: theme.spacing.lg,
+    marginBottom: theme.spacing.md,
   },
   tagline: {
     color: theme.colors.mutedText,
@@ -153,12 +154,13 @@ const styles = StyleSheet.create({
     gap: theme.spacing.md,
   },
   footer: {
-    gap: theme.spacing.sm,
-    paddingBottom: theme.spacing.sm,
+    marginTop: theme.spacing.sm,
   },
   playerHint: {
-    color: theme.colors.mutedText,
+    color: theme.colors.text,
     fontSize: 14,
+    fontWeight: '800',
+    textAlign: 'center',
   },
   beerOverlay: {
     ...StyleSheet.absoluteFillObject,

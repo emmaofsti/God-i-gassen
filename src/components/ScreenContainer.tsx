@@ -1,6 +1,14 @@
 import { PropsWithChildren } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { theme } from '@/src/constants/theme';
 
@@ -21,11 +29,26 @@ function NeonBackground() {
 }
 
 export function ScreenContainer({ children, scroll = false, contentStyle }: Props) {
+  const insets = useSafeAreaInsets();
+  const verticalPadding = Math.max(insets.bottom, theme.spacing.sm);
+
   if (scroll) {
     return (
       <SafeAreaView style={styles.safeArea}>
         <NeonBackground />
-        <ScrollView contentContainerStyle={[styles.scrollContent, contentStyle]}>{children}</ScrollView>
+        <KeyboardAvoidingView
+          style={styles.keyboardLayer}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
+          <ScrollView
+            contentContainerStyle={[styles.scrollContent, { paddingBottom: theme.spacing.xl + verticalPadding }, contentStyle]}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            contentInsetAdjustmentBehavior="automatic"
+          >
+            {children}
+          </ScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     );
   }
@@ -33,7 +56,12 @@ export function ScreenContainer({ children, scroll = false, contentStyle }: Prop
   return (
     <SafeAreaView style={styles.safeArea}>
       <NeonBackground />
-      <View style={[styles.content, contentStyle]}>{children}</View>
+      <KeyboardAvoidingView
+        style={styles.keyboardLayer}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <View style={[styles.content, { paddingBottom: theme.spacing.md + verticalPadding }, contentStyle]}>{children}</View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -43,17 +71,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background,
   },
+  keyboardLayer: {
+    flex: 1,
+  },
   content: {
     flex: 1,
     paddingHorizontal: theme.spacing.lg,
-    paddingTop: theme.spacing.lg,
-    paddingBottom: theme.spacing.md,
+    paddingTop: theme.spacing.md,
   },
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: theme.spacing.lg,
-    paddingTop: theme.spacing.lg,
-    paddingBottom: theme.spacing.xl,
+    paddingTop: theme.spacing.md,
     gap: theme.spacing.md,
   },
   blob: {

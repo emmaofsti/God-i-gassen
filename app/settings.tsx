@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { BottomDock } from '@/src/components/BottomDock';
 import { PartyLogo } from '@/src/components/PartyLogo';
 import { ScreenContainer } from '@/src/components/ScreenContainer';
 import { SecondaryButton } from '@/src/components/SecondaryButton';
@@ -20,9 +21,9 @@ export default function SettingsScreen() {
         <Text style={styles.counter}>Lagrede spillere: {players.length}</Text>
         <SecondaryButton title="Slett alle spillere" onPress={resetPlayers} danger />
       </View>
-      <View style={styles.footer}>
+      <BottomDock style={styles.footer}>
         <SecondaryButton title="Tilbake" onPress={() => router.back()} />
-      </View>
+      </BottomDock>
     </ScreenContainer>
   );
 }

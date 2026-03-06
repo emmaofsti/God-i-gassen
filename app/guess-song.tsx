@@ -1,10 +1,10 @@
 import * as AuthSession from 'expo-auth-session';
-import { Audio, AVPlaybackStatus } from 'expo-av';
 import { useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Linking, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { BottomDock } from '@/src/components/BottomDock';
 import { PartyLogo } from '@/src/components/PartyLogo';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { ScreenContainer } from '@/src/components/ScreenContainer';
@@ -12,10 +12,6 @@ import { SecondaryButton } from '@/src/components/SecondaryButton';
 import { theme } from '@/src/constants/theme';
 import { useGameSession } from '@/src/context/GameSessionContext';
 import { createMusicRound, MusicRound } from '@/src/game/musicEngine';
-import {
-  createInitialSoundTriggerState,
-  evaluateSoundTrigger,
-} from '@/src/game/soundTrigger';
 import {
   clearSpotifyAuth,
   ensureSpotifyAuth,
@@ -36,21 +32,7 @@ import {
 
 WebBrowser.maybeCompleteAuthSession();
 
-const SOUND_POLL_MS = 120;
-
-const recordingOptions = {
-  ...Audio.RecordingOptionsPresets.HIGH_QUALITY,
-  android: {
-    ...Audio.RecordingOptionsPresets.HIGH_QUALITY.android,
-    isMeteringEnabled: true,
-  },
-  ios: {
-    ...Audio.RecordingOptionsPresets.HIGH_QUALITY.ios,
-    isMeteringEnabled: true,
-  },
-};
-
-export default function MusicGameScreen() {
+export default function GuessSongScreen() {
   const router = useRouter();
   const { players } = useGameSession();
 
@@ -78,17 +60,7 @@ export default function MusicGameScreen() {
   const [isDrawingRound, setIsDrawingRound] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const [isListeningForTrigger, setIsListeningForTrigger] = useState(false);
-  const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
-  const [triggerMessage, setTriggerMessage] = useState<string | null>(null);
-  const [meteringDb, setMeteringDb] = useState<number | null>(null);
-
-  const activeSoundRef = useRef<Audio.Sound | null>(null);
-  const activeRecordingRef = useRef<Audio.Recording | null>(null);
-  const pollIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const triggerStateRef = useRef(createInitialSoundTriggerState());
-  const pollBusyRef = useRef(false);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
   const [request, response, promptAsync] = AuthSession.useAuthRequest(
     {
@@ -100,50 +72,6 @@ export default function MusicGameScreen() {
     },
     spotifyDiscovery
   );
-
-  const stopAudioSession = useCallback(async () => {
-    if (pollIntervalRef.current) {
-      clearInterval(pollIntervalRef.current);
-      pollIntervalRef.current = null;
-    }
-
-    const recording = activeRecordingRef.current;
-    activeRecordingRef.current = null;
-
-    if (recording) {
-      try {
-        const status = await recording.getStatusAsync();
-        if (status.isRecording) {
-          await recording.stopAndUnloadAsync();
-        } else if (!status.isDoneRecording) {
-          await recording.stopAndUnloadAsync();
-        }
-      } catch {
-        // Ignorer oppryddingsfeil.
-      }
-    }
-
-    const sound = activeSoundRef.current;
-    activeSoundRef.current = null;
-
-    if (sound) {
-      try {
-        await sound.stopAsync();
-      } catch {
-        // Ignorer stop-feil.
-      }
-
-      try {
-        await sound.unloadAsync();
-      } catch {
-        // Ignorer unload-feil.
-      }
-    }
-
-    setIsListeningForTrigger(false);
-    setIsPreviewPlaying(false);
-    setMeteringDb(null);
-  }, []);
 
   const ensureFreshAuth = useCallback(async () => {
     if (!authState) {
@@ -160,12 +88,6 @@ export default function MusicGameScreen() {
 
     return fresh;
   }, [authState, clientId]);
-
-  useEffect(() => {
-    return () => {
-      void stopAudioSession();
-    };
-  }, [stopAudioSession]);
 
   useEffect(() => {
     let mounted = true;
@@ -200,7 +122,7 @@ export default function MusicGameScreen() {
       }
     };
 
-    hydrateSpotify();
+    void hydrateSpotify();
 
     return () => {
       mounted = false;
@@ -213,6 +135,7 @@ export default function MusicGameScreen() {
     }
 
     let mounted = true;
+
     const finishAuth = async () => {
       if (!request?.codeVerifier || !clientId) {
         setErrorMessage('Innlogging feilet: mangler PKCE-verifier eller Client ID.');
@@ -248,6 +171,7 @@ export default function MusicGameScreen() {
         await saveSpotifyAuth(nextAuth);
         if (mounted) {
           setAuthState(nextAuth);
+          setInfoMessage('Spotify er koblet til.');
         }
       } catch (error) {
         if (mounted) {
@@ -260,7 +184,7 @@ export default function MusicGameScreen() {
       }
     };
 
-    finishAuth();
+    void finishAuth();
 
     return () => {
       mounted = false;
@@ -311,7 +235,7 @@ export default function MusicGameScreen() {
       }
     };
 
-    loadSpotifyData();
+    void loadSpotifyData();
 
     return () => {
       mounted = false;
@@ -325,6 +249,7 @@ export default function MusicGameScreen() {
     }
 
     setErrorMessage(null);
+    setInfoMessage(null);
     setIsConnecting(true);
 
     try {
@@ -335,7 +260,6 @@ export default function MusicGameScreen() {
   };
 
   const disconnectSpotify = async () => {
-    await stopAudioSession();
     await clearSpotifyAuth();
     setAuthState(null);
     setUser(null);
@@ -343,116 +267,9 @@ export default function MusicGameScreen() {
     setSelectedPlaylistId(null);
     setCurrentRound(null);
     setShowReveal(false);
-    setTriggerMessage(null);
+    setInfoMessage('Spotify ble koblet fra.');
     setErrorMessage(null);
   };
-
-  const stopBecauseTrigger = useCallback(async () => {
-    await stopAudioSession();
-    setTriggerMessage('Lyd registrert. Sangen stoppet umiddelbart.');
-  }, [stopAudioSession]);
-
-  const playPreviewRound = useCallback(
-    async (round: MusicRound) => {
-      if (!round.previewUrl) {
-        setTriggerMessage('Ingen preview tilgjengelig på denne låta.');
-        return;
-      }
-
-      setErrorMessage(null);
-      setTriggerMessage('Starter lytte-modus... rop høyt for å trigge stopp.');
-
-      try {
-        await stopAudioSession();
-
-        const permission = await Audio.requestPermissionsAsync();
-        if (!permission.granted) {
-          setTriggerMessage('Mikrofontillatelse mangler. Tillat mikrofon i appinnstillinger.');
-          return;
-        }
-
-        await Audio.setAudioModeAsync({
-          allowsRecordingIOS: true,
-          playsInSilentModeIOS: true,
-          shouldDuckAndroid: true,
-          playThroughEarpieceAndroid: false,
-        });
-
-        const recording = new Audio.Recording();
-        await recording.prepareToRecordAsync(recordingOptions);
-        await recording.startAsync();
-        activeRecordingRef.current = recording;
-
-        const { sound } = await Audio.Sound.createAsync(
-          { uri: round.previewUrl },
-          { shouldPlay: true, progressUpdateIntervalMillis: 80 }
-        );
-
-        activeSoundRef.current = sound;
-        setIsPreviewPlaying(true);
-        setIsListeningForTrigger(true);
-        triggerStateRef.current = createInitialSoundTriggerState();
-
-        sound.setOnPlaybackStatusUpdate((status: AVPlaybackStatus) => {
-          if (!status.isLoaded) {
-            return;
-          }
-
-          setIsPreviewPlaying(status.isPlaying);
-
-          if (status.didJustFinish) {
-            void stopAudioSession();
-            setTriggerMessage('Preview ble ferdig før noen trigget stopp.');
-          }
-        });
-
-        pollIntervalRef.current = setInterval(() => {
-          void (async () => {
-            if (pollBusyRef.current) {
-              return;
-            }
-            pollBusyRef.current = true;
-
-            try {
-              const activeRecording = activeRecordingRef.current;
-              if (!activeRecording) {
-                return;
-              }
-
-              const status = await activeRecording.getStatusAsync();
-              if (!status.isRecording) {
-                return;
-              }
-
-              const liveMeter = typeof status.metering === 'number' ? status.metering : -160;
-              setMeteringDb(liveMeter);
-
-              const { nextState, triggered } = evaluateSoundTrigger(
-                triggerStateRef.current,
-                liveMeter
-              );
-
-              triggerStateRef.current = nextState;
-
-              if (triggered) {
-                await stopBecauseTrigger();
-              }
-            } finally {
-              pollBusyRef.current = false;
-            }
-          })();
-        }, SOUND_POLL_MS);
-      } catch (error) {
-        await stopAudioSession();
-        setTriggerMessage(
-          error instanceof Error
-            ? `Lydtrigger feilet: ${error.message}`
-            : 'Lydtrigger feilet. Prøv en ny runde.'
-        );
-      }
-    },
-    [stopAudioSession, stopBecauseTrigger]
-  );
 
   const drawSpotifyRound = async () => {
     if (!selectedPlaylistId) {
@@ -462,9 +279,9 @@ export default function MusicGameScreen() {
 
     setIsDrawingRound(true);
     setErrorMessage(null);
+    setInfoMessage(null);
 
     try {
-      await stopAudioSession();
       const fresh = await ensureFreshAuth();
       const tracks = await fetchSpotifyPlaylistTracks(fresh.accessToken, selectedPlaylistId, 100);
       const randomTrack = pickRandomSpotifyTrack(tracks);
@@ -481,36 +298,13 @@ export default function MusicGameScreen() {
       );
 
       setCurrentRound(round);
-      setTriggerMessage(round.previewUrl ? null : 'Denne låta har ingen preview hos Spotify. Trekk ny runde.');
       setShowReveal(false);
-
-      if (round.previewUrl) {
-        await playPreviewRound(round);
-      }
+      setInfoMessage('Ny sang trukket. Bruk Spotify for å spille av låta.');
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'Kunne ikke trekke låt fra Spotify.');
     } finally {
       setIsDrawingRound(false);
     }
-  };
-
-  const startVoiceStopRound = async () => {
-    if (!currentRound) {
-      setTriggerMessage('Trekk en Spotify-runde først.');
-      return;
-    }
-
-    if (!currentRound.previewUrl) {
-      setTriggerMessage('Ingen preview tilgjengelig på denne låta.');
-      return;
-    }
-
-    await playPreviewRound(currentRound);
-  };
-
-  const stopRoundManually = async () => {
-    await stopAudioSession();
-    setTriggerMessage('Runde stoppet manuelt.');
   };
 
   const canPlay = players.length >= 2;
@@ -534,8 +328,10 @@ export default function MusicGameScreen() {
       <PartyLogo compact />
 
       <View style={styles.heroCard}>
-        <Text style={styles.title}>Gjett Sangen + Spotify</Text>
-        <Text style={styles.subtitle}>Koble til Spotify, velg spilleliste og trekk en låt for rop-og-stopp-runde.</Text>
+        <Text style={styles.title}>Gjett Sangen</Text>
+        <Text style={styles.subtitle}>
+          Koble til Spotify, velg spilleliste og trekk en låt. Spill av i Spotify og la gruppa gjette.
+        </Text>
       </View>
 
       {clientIdMissing ? (
@@ -560,7 +356,7 @@ export default function MusicGameScreen() {
 
       {authState && !clientIdMissing ? (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Spillelister</Text>
+          <Text style={styles.sectionTitle}>Spilleliste</Text>
           {isHydrating || isLoadingSpotifyData ? (
             <Text style={styles.mutedText}>Laster Spotify-data...</Text>
           ) : playlists.length === 0 ? (
@@ -583,12 +379,9 @@ export default function MusicGameScreen() {
             </ScrollView>
           )}
 
-          <Text style={styles.mutedText}>
-            Trykk en spilleliste for å velge den. Trykk deretter knappen under for å trekke og spille en tilfeldig preview.
-          </Text>
-
+          <Text style={styles.mutedText}>Velg én spilleliste og trekk deretter en tilfeldig låt.</Text>
           <PrimaryButton
-            title={isDrawingRound ? 'Trekker og spiller...' : 'Trekk og spill Spotify-runde'}
+            title={isDrawingRound ? 'Trekker låt...' : 'Trekk låt'}
             onPress={drawSpotifyRound}
             disabled={isDrawingRound || isLoadingSpotifyData || playlists.length === 0}
           />
@@ -599,10 +392,11 @@ export default function MusicGameScreen() {
         <View style={styles.roundCard}>
           <Text style={styles.roundTitle}>Runde klar</Text>
           <Text style={styles.roundPrompt}>{currentRound.prompt}</Text>
+          <Text style={styles.penaltyText}>{currentRound.opponentName} drikker {currentRound.sips} ved feil svar.</Text>
 
           <View style={styles.actionRow}>
             <PrimaryButton
-              title="Åpne låt i Spotify"
+              title="Åpne i Spotify"
               onPress={() => Linking.openURL(currentRound.trackUrl)}
               style={styles.actionButton}
             />
@@ -614,39 +408,15 @@ export default function MusicGameScreen() {
           </View>
 
           {showReveal ? <Text style={styles.revealText}>{currentRound.revealText}</Text> : null}
-          <Text style={styles.penaltyText}>{currentRound.opponentName} drikker {currentRound.sips} ved feil svar.</Text>
         </View>
       ) : null}
 
-      <View style={styles.voiceTriggerCard}>
-        <Text style={styles.voiceTriggerTitle}>Gjett Sangen: auto-stopp på lyd</Text>
-        <Text style={styles.voiceTriggerBody}>
-          Spill preview i appen. Når noen roper høyt nok, stopper sangen automatisk.
-        </Text>
-
-        <View style={styles.actionRow}>
-          <PrimaryButton
-            title={isListeningForTrigger ? 'Lytter...' : 'Spill preview igjen'}
-            onPress={startVoiceStopRound}
-            disabled={isListeningForTrigger || !currentRound?.previewUrl}
-            style={styles.actionButton}
-          />
-          <SecondaryButton title="Stopp" onPress={stopRoundManually} style={styles.actionButton} />
-        </View>
-
-        <Text style={styles.meterText}>
-          {isListeningForTrigger ? 'Lytter etter rop...' : isPreviewPlaying ? 'Spiller preview...' : 'Klar'}
-        </Text>
-        {!currentRound ? <Text style={styles.warningText}>Trekk en Spotify-runde først.</Text> : null}
-        {currentRound && !currentRound.previewUrl ? (
-          <Text style={styles.warningText}>Denne låta mangler preview. Trekk en ny runde.</Text>
-        ) : null}
-      </View>
-
-      {triggerMessage ? <Text style={styles.infoBanner}>{triggerMessage}</Text> : null}
+      {infoMessage ? <Text style={styles.infoBanner}>{infoMessage}</Text> : null}
       {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
 
-      <SecondaryButton title="Tilbake til hjem" onPress={() => router.replace('/')} />
+      <BottomDock>
+        <SecondaryButton title="Tilbake til hjem" onPress={() => router.replace('/')} />
+      </BottomDock>
     </ScreenContainer>
   );
 }
@@ -662,13 +432,13 @@ const styles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text,
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: '900',
   },
   subtitle: {
     color: theme.colors.mutedText,
-    fontSize: 14,
-    lineHeight: 21,
+    fontSize: 15,
+    lineHeight: 22,
   },
   section: {
     gap: theme.spacing.sm,
@@ -686,6 +456,7 @@ const styles = StyleSheet.create({
   mutedText: {
     color: theme.colors.mutedText,
     fontSize: 14,
+    lineHeight: 20,
   },
   infoCard: {
     backgroundColor: '#111A2A9E',
@@ -759,55 +530,30 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     fontSize: 18,
     fontWeight: '800',
-    lineHeight: 28,
+    lineHeight: 26,
   },
-  voiceTriggerCard: {
-    marginTop: theme.spacing.xs,
-    backgroundColor: '#101A2BD9',
-    borderWidth: 1,
-    borderColor: '#6A7BA744',
-    borderRadius: theme.radius.md,
-    padding: theme.spacing.sm,
-    gap: theme.spacing.sm,
-  },
-  voiceTriggerTitle: {
-    color: theme.colors.text,
-    fontSize: 16,
-    fontWeight: '900',
-  },
-  voiceTriggerBody: {
-    color: theme.colors.mutedText,
-    fontSize: 13,
-    lineHeight: 18,
-  },
-  meterText: {
-    color: '#ACBDE2',
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  warningText: {
-    color: '#FFD38E',
-    fontSize: 12,
+  penaltyText: {
+    color: '#A8B7D6',
+    fontSize: 14,
     fontWeight: '700',
   },
   revealText: {
-    color: theme.colors.accent,
-    fontSize: 16,
-    fontWeight: '900',
-  },
-  penaltyText: {
-    color: theme.colors.mutedText,
-    fontSize: 14,
+    color: '#B9FFF2',
+    fontSize: 18,
+    fontWeight: '800',
+    lineHeight: 26,
   },
   infoBanner: {
-    color: '#AFFFE4',
+    color: '#B9FFF2',
     fontSize: 14,
     fontWeight: '700',
+    textAlign: 'center',
   },
   errorText: {
-    color: '#FF9AB1',
+    color: '#FF9FB0',
     fontSize: 14,
-    fontWeight: '800',
+    fontWeight: '700',
+    textAlign: 'center',
   },
   emptyState: {
     flex: 1,

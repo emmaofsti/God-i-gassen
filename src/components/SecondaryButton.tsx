@@ -31,10 +31,11 @@ const styles = StyleSheet.create({
     borderColor: '#4B5D8155',
     borderWidth: 1,
     borderRadius: theme.radius.md,
-    paddingVertical: 14,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 52,
+    minHeight: 58,
   },
   pressed: {
     opacity: 0.82,
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   text: {
     color: theme.colors.text,
     fontWeight: '800',
-    fontSize: 15,
+    fontSize: 16,
     letterSpacing: 0.4,
   },
   dangerText: {

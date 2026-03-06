@@ -3,6 +3,7 @@ import { useMemo, useRef, useState } from 'react';
 import { Animated, Easing, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 import wheelData from '@/data/wheelSegments.json';
+import { BottomDock } from '@/src/components/BottomDock';
 import { PartyLogo } from '@/src/components/PartyLogo';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { ScreenContainer } from '@/src/components/ScreenContainer';
@@ -137,7 +138,7 @@ export default function WheelGameScreen() {
         </Animated.View>
       </View>
 
-      <View style={styles.bottomArea}>
+      <BottomDock style={styles.bottomArea}>
         <PrimaryButton title={isSpinning ? 'Spinner...' : 'SPIN'} onPress={onSpin} disabled={isSpinning} />
         {result ? (
           <View style={styles.resultCard}>
@@ -149,7 +150,7 @@ export default function WheelGameScreen() {
           <Text style={styles.resultHint}>Ingen resultat ennå. Trykk SPIN.</Text>
         )}
         <SecondaryButton title="Avslutt" onPress={() => router.replace('/')} />
-      </View>
+      </BottomDock>
     </ScreenContainer>
   );
 }
@@ -161,19 +162,19 @@ const styles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text,
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: '900',
   },
   subtitle: {
     color: theme.colors.mutedText,
-    fontSize: 14,
+    fontSize: 15,
   },
   wheelArea: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: theme.spacing.md,
-    marginBottom: theme.spacing.md,
+    marginTop: theme.spacing.sm,
+    marginBottom: theme.spacing.sm,
   },
   ringGlow: {
     position: 'absolute',
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#26F3EB',
   },
   bottomArea: {
-    gap: theme.spacing.sm,
+    marginTop: theme.spacing.xs,
   },
   resultCard: {
     backgroundColor: '#10192A99',

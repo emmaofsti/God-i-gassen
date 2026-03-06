@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { PanResponder, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import cardsData from '@/data/cards.json';
+import { BottomDock } from '@/src/components/BottomDock';
 import { PartyLogo } from '@/src/components/PartyLogo';
 import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { ScreenContainer } from '@/src/components/ScreenContainer';
@@ -106,10 +107,10 @@ export default function CardGameScreen() {
         )}
       </Pressable>
 
-      <View style={styles.actions}>
+      <BottomDock style={styles.actions}>
         <PrimaryButton title="Neste kort" onPress={nextCard} />
         <SecondaryButton title="Avslutt" onPress={() => router.replace('/')} />
-      </View>
+      </BottomDock>
     </ScreenContainer>
   );
 }
@@ -121,24 +122,24 @@ const styles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text,
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: '900',
   },
   subtitle: {
     color: theme.colors.mutedText,
-    fontSize: 14,
+    fontSize: 15,
   },
   cardPressArea: {
     flex: 1,
-    marginTop: theme.spacing.md,
-    marginBottom: theme.spacing.md,
+    marginTop: theme.spacing.sm,
+    marginBottom: theme.spacing.sm,
   },
   card: {
     flex: 1,
     borderWidth: 1,
     borderColor: '#4A5B8277',
     borderRadius: theme.radius.xl,
-    padding: theme.spacing.lg,
+    padding: theme.spacing.md,
     justifyContent: 'space-between',
     shadowColor: '#6B90FF',
     shadowOpacity: 0.28,
@@ -159,9 +160,9 @@ const styles = StyleSheet.create({
   },
   cardText: {
     color: theme.colors.text,
-    fontSize: 34,
+    fontSize: 32,
     fontWeight: '900',
-    lineHeight: 42,
+    lineHeight: 40,
     flex: 1,
     marginTop: theme.spacing.md,
   },
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   actions: {
-    gap: theme.spacing.sm,
+    marginTop: theme.spacing.xs,
   },
   emptyState: {
     flex: 1,

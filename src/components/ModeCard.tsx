@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     borderColor: '#34436177',
     borderWidth: 1,
     padding: theme.spacing.md,
+    minHeight: 138,
     gap: theme.spacing.sm,
   },
   cardShellSelected: {
@@ -80,18 +81,18 @@ const styles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text,
-    fontSize: 21,
+    fontSize: 23,
     fontWeight: '900',
     letterSpacing: 0.4,
   },
   subtitle: {
     color: theme.colors.mutedText,
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 15,
+    lineHeight: 22,
   },
   dot: {
-    width: 16,
-    height: 16,
+    width: 18,
+    height: 18,
     borderRadius: theme.radius.pill,
     borderWidth: 2,
     borderColor: '#6D82AC',
