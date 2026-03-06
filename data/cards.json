@@ -2,30 +2,30 @@
   {
     "id": "drink-1",
     "category": "drink",
-    "templateText": "{player} tar {sips} slurker.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 5
-    }
+    "templateText": "{player} starter waterfall. Alle følger etter. {player} stopper først."
   },
   {
     "id": "drink-2",
     "category": "drink",
-    "templateText": "{player} drikker to ganger antall stavelser i navnet sitt."
+    "templateText": "{player} tar {sips} slurker uten å smile.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 4
+    }
   },
   {
     "id": "drink-3",
     "category": "drink",
-    "templateText": "{player} og {player2} skåler og tar {sips} slurker.",
+    "templateText": "{player} og {player2} skåler. Taperen i stirrekonkurranse tar {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 5
+      "maxSips": 4
     }
   },
   {
     "id": "drink-4",
     "category": "drink",
-    "templateText": "Alle peker på {player}. {player} tar {sips} slurker.",
+    "templateText": "{player2} velger tempo. {player} drikker {sips} i det tempoet.",
     "params": {
       "minSips": 1,
       "maxSips": 5
@@ -34,132 +34,144 @@
   {
     "id": "drink-5",
     "category": "drink",
-    "templateText": "{player} tar en slurk for hver ring på telefonen sin (maks {sips}).",
+    "templateText": "{player} tar {sips}. Hvis hen søler, tar hen 2 til.",
     "params": {
-      "minSips": 1,
+      "minSips": 2,
       "maxSips": 5
     }
   },
   {
     "id": "drink-6",
     "category": "drink",
-    "templateText": "{player2} bestemmer: {player} tar {sips} slurker.",
+    "templateText": "{player} må holde øyekontakt med {player2} og ta {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 5
+      "maxSips": 4
     }
   },
   {
     "id": "drink-7",
     "category": "drink",
-    "templateText": "{player} drikker hvis hen har på seg svart. Hvis ikke: {player2} drikker {sips}.",
+    "templateText": "{player} tar {sips} med ikke-dominant hand.",
     "params": {
       "minSips": 1,
-      "maxSips": 5
+      "maxSips": 4
     }
   },
   {
     "id": "drink-8",
     "category": "drink",
-    "templateText": "Rask matte: {player} svarer riktig eller drikker {sips}.",
+    "templateText": "{player} drikker til personen til høyre sier stopp. Maks {sips} slurker.",
     "params": {
-      "minSips": 1,
+      "minSips": 2,
       "maxSips": 5
     }
   },
   {
     "id": "drink-9",
     "category": "drink",
-    "templateText": "{player} tar en lang slurk, så gir {player2} en kort slurk tilbake."
+    "templateText": "{player} tar {sips}. Alle som synes hen fortjente det tar 1 med.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 4
+    }
   },
   {
     "id": "drink-10",
     "category": "drink",
-    "templateText": "{player} tar {sips} slurker uten å smile.",
+    "templateText": "{player} og {player2} bytter glass i 5 sekunder og tar {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 5
+      "maxSips": 3
     }
   },
   {
     "id": "drink-11",
     "category": "drink",
-    "templateText": "{player} drikker, og alle andre tar 1 hvis de lo sist minutt."
+    "templateText": "{player} tar {sips} mens gruppa teller sakte til tre.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 4
+    }
   },
   {
     "id": "drink-12",
     "category": "drink",
-    "templateText": "{player2} starter en nedtelling fra 3. {player} må drikke på 0 ({sips} slurker).",
+    "templateText": "{player} drikker {sips}, men kan gi dem videre hvis gruppa ler av begrunnelsen hen gir.",
     "params": {
       "minSips": 1,
-      "maxSips": 5
+      "maxSips": 4
     }
   },
   {
     "id": "drink-13",
     "category": "drink",
-    "templateText": "{player} tar {sips} slurker med ikke-dominant hånd.",
+    "templateText": "{player2} peker på {player}. {player} tar {sips} kontrollerte slurker.",
     "params": {
       "minSips": 1,
-      "maxSips": 5
+      "maxSips": 4
     }
   },
   {
     "id": "drink-14",
     "category": "drink",
-    "templateText": "{player} tar {sips} slurker. Hvis glasset er tomt, fyll opp og ta 1 til.",
+    "templateText": "{player} tar {sips} før neste person rekker å si navnet ditt.",
     "params": {
       "minSips": 1,
-      "maxSips": 5
+      "maxSips": 4
     }
   },
   {
     "id": "drink-15",
     "category": "drink",
-    "templateText": "{player} tar 1 slurk per person som ser på akkurat nå (maks {sips}).",
+    "templateText": "{player} drikker stående. {sips} slurker.",
     "params": {
       "minSips": 1,
-      "maxSips": 5
+      "maxSips": 4
     }
   },
   {
     "id": "drink-16",
     "category": "drink",
-    "templateText": "{player2} velger tempo. {player} tar {sips} slurker i det tempoet.",
+    "templateText": "{player} tar {sips}. Hvis hen lager lyd etterpå, 1 ekstra.",
     "params": {
       "minSips": 1,
-      "maxSips": 5
+      "maxSips": 4
     }
   },
   {
     "id": "drink-17",
     "category": "drink",
-    "templateText": "{player} og {player2} bytter glass i 10 sekunder og tar {sips} slurker.",
+    "templateText": "{player} og {player2} sier \"skål\" samtidig og tar {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 5
+      "maxSips": 3
     }
   },
   {
     "id": "drink-18",
     "category": "drink",
-    "templateText": "{player} tar {sips} slurker og sier \"skål\" etter hver.",
+    "templateText": "{player} tar {sips}. Alle andre følger med 1.",
     "params": {
-      "minSips": 1,
+      "minSips": 2,
       "maxSips": 5
     }
   },
   {
     "id": "drink-19",
     "category": "drink",
-    "templateText": "{player} tar en bonus-slurk hvis hen sier \"unnskyld\" i neste runde."
+    "templateText": "{player} må ta {sips} uten å bruke hendene på glasset.",
+    "params": {
+      "minSips": 2,
+      "maxSips": 4
+    }
   },
   {
     "id": "drink-20",
     "category": "drink",
-    "templateText": "{player} avslutter runden med {sips} kontrollerte slurker.",
+    "templateText": "{player} avslutter runden med {sips} lange slurker.",
     "params": {
-      "minSips": 1,
+      "minSips": 2,
       "maxSips": 5
     }
   },
@@ -175,17 +187,25 @@
   {
     "id": "give-2",
     "category": "give",
-    "templateText": "{player} deler ut 2 slurker valgfritt."
+    "templateText": "{player} deler ut {sips} slurker, men maks 2 til samme person.",
+    "params": {
+      "minSips": 2,
+      "maxSips": 4
+    }
   },
   {
     "id": "give-3",
     "category": "give",
-    "templateText": "{player} gir 1 slurk til alle som har vært på festival."
+    "templateText": "{player} gir {sips} til den som ler først nå.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "give-4",
     "category": "give",
-    "templateText": "{player} velger én spiller som må ta {sips} slurker.",
+    "templateText": "{player} og {player2} spiller stein-saks-papir. Taperen får {sips}.",
     "params": {
       "minSips": 1,
       "maxSips": 4
@@ -194,16 +214,16 @@
   {
     "id": "give-5",
     "category": "give",
-    "templateText": "{player} og {player2}: taperen i stein-saks-papir får {sips} slurker.",
+    "templateText": "Pekelek: Alle peker på den som mest sannsynlig mister telefonen i kveld. Den får {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "give-6",
     "category": "give",
-    "templateText": "{player} gir {sips} slurker fordelt på minst to personer.",
+    "templateText": "{player} gir {sips} til en spiller som gruppa peker på.",
     "params": {
       "minSips": 1,
       "maxSips": 4
@@ -212,7 +232,7 @@
   {
     "id": "give-7",
     "category": "give",
-    "templateText": "{player} kan gi {sips} slurker, men må begrunne valget.",
+    "templateText": "{player} velger en spiller som må ta {sips}, men må begrunne valget.",
     "params": {
       "minSips": 1,
       "maxSips": 4
@@ -221,40 +241,52 @@
   {
     "id": "give-8",
     "category": "give",
-    "templateText": "{player} gir 1 slurk til den som kom sist i dag."
+    "templateText": "{player} gir {sips} til den som ser mest skyldig ut akkurat nå.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "give-9",
     "category": "give",
-    "templateText": "{player} gir {sips} slurker til noen med samme initial som seg, eller drikker selv.",
+    "templateText": "{player} kan redde {player2} eller gi {player2} {sips}. Velg.",
     "params": {
-      "minSips": 1,
+      "minSips": 2,
       "maxSips": 4
     }
   },
   {
     "id": "give-10",
     "category": "give",
-    "templateText": "{player} gir 2 slurker til den mest høylytte akkurat nå."
-  },
-  {
-    "id": "give-11",
-    "category": "give",
-    "templateText": "{player} gir {sips} slurker til {player2} hvis dere matcher farge på klær.",
+    "templateText": "{player} gir {sips} til den som har mest energi akkurat nå.",
     "params": {
       "minSips": 1,
       "maxSips": 4
     }
   },
   {
+    "id": "give-11",
+    "category": "give",
+    "templateText": "{player} gir {sips} til den som hadde vunnet en løgndetektor-test i dette rommet.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
+  },
+  {
     "id": "give-12",
     "category": "give",
-    "templateText": "{player} velger tema; alle som ikke kan svare gir 1 slurk til {player}."
+    "templateText": "{player} gir {sips} til en som tør å ta dem uten å reagere.",
+    "params": {
+      "minSips": 2,
+      "maxSips": 4
+    }
   },
   {
     "id": "give-13",
     "category": "give",
-    "templateText": "{player} gir {sips} slurker til personen til venstre for {player2}.",
+    "templateText": "{player} gir {sips} til valgfri rival.",
     "params": {
       "minSips": 1,
       "maxSips": 4
@@ -263,338 +295,370 @@
   {
     "id": "give-14",
     "category": "give",
-    "templateText": "{player} gir 1 slurk til alle som har samme favorittfarge."
+    "templateText": "{player} gir {sips} til personen som ville vært verst på roadtrip.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 4
+    }
   },
   {
     "id": "give-15",
     "category": "give",
-    "templateText": "{player} gir {sips} slurker til valgfri spiller med kortest navn.",
+    "templateText": "{player} gir {sips} til en spiller som må synge en linje først.",
     "params": {
-      "minSips": 1,
+      "minSips": 2,
       "maxSips": 4
     }
   },
   {
     "id": "give-16",
     "category": "give",
-    "templateText": "{player} gir {sips} slurker til en spiller som har ledd mest.",
+    "templateText": "Pekelek: Alle peker på den som hadde vært verst å sitte fast i heis med. Den får {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "give-17",
     "category": "give",
-    "templateText": "{player} gir 3 slurker totalt, men maks 2 til samme person."
+    "templateText": "{player} og {player2} blir enige om hvem som tar {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 4
+    }
   },
   {
     "id": "give-18",
     "category": "give",
-    "templateText": "{player} og {player2} blir enige: hvem får {sips} slurker?",
+    "templateText": "{player} gir {sips} til den som ser mest uskyldig ut, men sannsynligvis ikke er det.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "give-19",
     "category": "give",
-    "templateText": "{player} gir {sips} slurker til en som ikke har drukket nylig.",
+    "templateText": "{player} gir 1 slurk til tre forskjellige spillere."
+  },
+  {
+    "id": "give-20",
+    "category": "give",
+    "templateText": "{player} gir {sips} til den mest mistenkelige i rommet.",
     "params": {
       "minSips": 1,
       "maxSips": 4
     }
   },
   {
-    "id": "give-20",
-    "category": "give",
-    "templateText": "{player} gir 1 slurk til alle med hvite sko."
-  },
-  {
     "id": "everyone-1",
     "category": "everyone",
-    "templateText": "Alle tar {sips} slurker.",
+    "templateText": "{player} er gris. Når som helst senere kan du bruke det. Sistemann med tommelen på bordkanten tar bonski.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "everyone-2",
     "category": "everyone",
-    "templateText": "Alle med sokker tar 1 slurk."
+    "templateText": "{player} er gris. Når som helst senere kan du bruke det. Sistemann med tommelen på bordkanten tar bonski.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "everyone-3",
     "category": "everyone",
-    "templateText": "Alle peker på noen. Den med flest pek tar {sips} slurker.",
+    "templateText": "{player} er gris. Når som helst senere kan du bruke det. Sistemann med tommelen på bordkanten tar bonski.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "everyone-4",
     "category": "everyone",
-    "templateText": "Alle tar en slurk hvis de har sendt melding i dag."
+    "templateText": "Jag har aldri: {player} starter. Alle som har gjort det tar 1."
   },
   {
     "id": "everyone-5",
     "category": "everyone",
-    "templateText": "Alle som har vært våkne siden før 08 tar {sips}.",
+    "templateText": "Alle må si et dyr. Første som gjentar eller stopper tar {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "everyone-6",
     "category": "everyone",
-    "templateText": "Alle med tomt glass tar 1 slurk av noe nå."
+    "templateText": "Pekelek: Alle peker på den som hadde overlevd lengst i zombieapokalypsen. Flest pek gir {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 2
+    }
   },
   {
     "id": "everyone-7",
     "category": "everyone",
-    "templateText": "Alle sier \"skål\" samtidig og tar 1 slurk."
+    "templateText": "Alle skåler med personen til venstre og tar 1."
   },
   {
     "id": "everyone-8",
     "category": "everyone",
-    "templateText": "Alle som sitter tar {sips} slurker, de som står tar 1.",
+    "templateText": "Alle må røre nesen. Siste tar {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "everyone-9",
     "category": "everyone",
-    "templateText": "Alle med mørk overdel tar 1 slurk."
+    "templateText": "Jag har aldri: sendt en melding i kveld jeg kanskje burde slettet. De som har, tar 1."
   },
   {
     "id": "everyone-10",
     "category": "everyone",
-    "templateText": "Alle må blinke med ett øye. De som feiler tar {sips}.",
+    "templateText": "Alle må si et land. Første som feiler tar {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "everyone-11",
     "category": "everyone",
-    "templateText": "Alle tar 1 slurk per bokstav i bynavnet de er i (maks {sips}).",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "Alle som har ghostet noen eller blitt ghostet tar 1."
   },
   {
     "id": "everyone-12",
     "category": "everyone",
-    "templateText": "Alle som har reist utenlands siste år tar 1 slurk."
+    "templateText": "Alle lukker øynene. {player} velger en. Den personen tar {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "everyone-13",
     "category": "everyone",
-    "templateText": "Alle bytter plass med noen og tar {sips} slurker.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "Alle må vise sitt verste sjekketriks på 2 sekunder. Den svakeste tar {sips}."
   },
   {
     "id": "everyone-14",
     "category": "everyone",
-    "templateText": "Alle som eier en caps tar 1 slurk."
+    "templateText": "Alle må mime en fisk. Den svakeste fisken tar {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "everyone-15",
     "category": "everyone",
-    "templateText": "Alle tar {sips} slurker i stillhet.",
+    "templateText": "Alle tar 1 slurk for hver gang de har byttet plass i kveld. Maks {sips}.",
     "params": {
-      "minSips": 1,
+      "minSips": 2,
       "maxSips": 4
     }
   },
   {
     "id": "everyone-16",
     "category": "everyone",
-    "templateText": "Alle som har vært på konsert siste år tar 1 slurk."
+    "templateText": "Alle peker på den villeste i rommet. Den personen tar {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 4
+    }
   },
   {
     "id": "everyone-17",
     "category": "everyone",
-    "templateText": "Alle som bruker klokke tar {sips} slurker.",
+    "templateText": "Alle tar {sips} i stillhet.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 2
     }
   },
   {
     "id": "everyone-18",
     "category": "everyone",
-    "templateText": "Alle med batteri under 30% tar 2 slurker."
+    "templateText": "Alle med tomt glass fyller opp og tar 1."
   },
   {
     "id": "everyone-19",
     "category": "everyone",
-    "templateText": "Alle tar en felles skål og {sips} slurker.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "Dilemma-runde: Den som helst ville spist kald grandis til frokost enn tatt taxi hjem tar 1."
   },
   {
     "id": "everyone-20",
     "category": "everyone",
-    "templateText": "Alle fullfører setningen \"I kveld blir...\" og tar 1 slurk."
+    "templateText": "Felles waterfall. {player} starter, {player2} stopper sist."
   },
   {
     "id": "rule-1",
     "category": "rule",
-    "templateText": "{player} lager en regel. Bryter du den: {sips} slurker.",
+    "templateText": "{player} lager en husregel. Brudd gir {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "rule-2",
     "category": "rule",
-    "templateText": "Ny regel: ingen fornavn. Brudd gir {sips} slurker.",
+    "templateText": "Ingen får si fornavn i neste runde. Brudd: {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "rule-3",
     "category": "rule",
-    "templateText": "{player2} er regelvakt neste 3 runder."
+    "templateText": "{player} velger et forbudt ord. Brudd gir {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "rule-4",
     "category": "rule",
-    "templateText": "Ny regel: snakk med dialekt i 2 runder eller drikk {sips}.",
+    "templateText": "Spørsmål må svares med spørsmål. Brudd gir {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "rule-5",
     "category": "rule",
-    "templateText": "{player} bestemmer et forbudt ord. Brudd gir {sips} slurker.",
+    "templateText": "Ingen får peke. Brudd gir {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "rule-6",
     "category": "rule",
-    "templateText": "Ny regel: ingen banning. Brudd = {sips} slurker.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "{player2} er regelpoliti i 3 runder."
   },
   {
     "id": "rule-7",
     "category": "rule",
-    "templateText": "Ny regel: bruk bare én hånd når du drikker."
+    "templateText": "Alle må drikke med motsatt hånd resten av runden."
   },
   {
     "id": "rule-8",
     "category": "rule",
-    "templateText": "Ny regel: ingen mobil i 2 runder. Brudd = {sips} slurker.",
+    "templateText": "Ingen får banne. Brudd gir {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "rule-9",
     "category": "rule",
-    "templateText": "{player} velger en lyd alle må lage før de drikker."
+    "templateText": "Hver gang noen drikker, må de si \"takk for meg\". Glemmer de det: {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 2
+    }
   },
   {
     "id": "rule-10",
     "category": "rule",
-    "templateText": "Ny regel: siste som reagerer på \"skål\" tar {sips} slurker.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "{player} velger et nytt kallenavn for {player2}. Feil navn gir 1."
   },
   {
     "id": "rule-11",
     "category": "rule",
-    "templateText": "{player} velger et nytt kallenavn for {player2}. Feil navn gir 1 slurk."
+    "templateText": "Ingen får se på mobilen før neste kort. Brudd gir {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "rule-12",
     "category": "rule",
-    "templateText": "Ny regel: spørsmål må svares med spørsmål. Brudd = {sips}.",
+    "templateText": "Alle må si \"sjef\" etter hver setning i én runde. Brudd gir {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 2
     }
   },
   {
     "id": "rule-13",
     "category": "rule",
-    "templateText": "Ny regel: ingen ord med bokstaven \"e\" i én runde."
+    "templateText": "Snakk med overdreven seriøs stemme til neste kort. Brudd gir {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 2
+    }
   },
   {
     "id": "rule-14",
     "category": "rule",
-    "templateText": "{player} bestemmer en mini-straff for neste regelbrudd."
+    "templateText": "{player} bestemmer en fast bevegelse alle må gjøre før de drikker."
   },
   {
     "id": "rule-15",
     "category": "rule",
-    "templateText": "Ny regel: alle må smile når de drikker."
+    "templateText": "Den som avbryter noen tar {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "rule-16",
     "category": "rule",
-    "templateText": "Ny regel: ingen kan si \"ja\" eller \"nei\" i 2 runder."
+    "templateText": "Ingen får si \"ja\" eller \"nei\" i to runder. Brudd gir {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "rule-17",
     "category": "rule",
-    "templateText": "{player} velger et emne ingen får nevne. Brudd = {sips}.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "{player} velger en lyd alle må lage før de drikker."
   },
   {
     "id": "rule-18",
     "category": "rule",
-    "templateText": "Ny regel: snakk sakte i én runde."
+    "templateText": "Alle må skåle med albuen først. Glemmer du det: {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 2
+    }
   },
   {
     "id": "rule-19",
     "category": "rule",
-    "templateText": "{player} og {player2} bestemmer felles husregel."
+    "templateText": "Regel: Den som ler av eget utsagn tar {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 2
+    }
   },
   {
     "id": "rule-20",
     "category": "rule",
-    "templateText": "Ny regel: den som avbryter må ta {sips} slurker.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "{player} og {player2} lager en midlertidig duo-regel for bordet."
   },
   {
     "id": "challenge-1",
     "category": "challenge",
-    "templateText": "{player} gjør 10 air squats eller tar {sips} slurker.",
+    "templateText": "{player} må mime en kjent film. Feiler gruppa å gjette: {player} tar {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -603,7 +667,7 @@
   {
     "id": "challenge-2",
     "category": "challenge",
-    "templateText": "{player} må si alfabetet baklengs til M, ellers {sips} slurker.",
+    "templateText": "{player} og {player2} må ha stirrekonkurranse. Taperen må ta 3 slurker.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -612,7 +676,7 @@
   {
     "id": "challenge-3",
     "category": "challenge",
-    "templateText": "{player} og {player2} stirrekonkurranse: taperen tar {sips}.",
+    "templateText": "Kategori: {player} må si fem ting du finner i en dagligvarebutikk på 5 sekunder, ellers {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -621,7 +685,7 @@
   {
     "id": "challenge-4",
     "category": "challenge",
-    "templateText": "{player} nynner en sang. Hvis ingen gjetter: {sips} slurker.",
+    "templateText": "{player} skal danse i 6 sekunder. Nekter = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -630,7 +694,7 @@
   {
     "id": "challenge-5",
     "category": "challenge",
-    "templateText": "{player} balanserer på ett bein i 8 sekunder eller drikker {sips}.",
+    "templateText": "{player2} velger en emoji. {player} må mime den eller ta {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -639,7 +703,7 @@
   {
     "id": "challenge-6",
     "category": "challenge",
-    "templateText": "{player} gjør en dyrelyd. Hvis gruppa ler, ta {sips}.",
+    "templateText": "{player} må finne tre rim på \"fest\" før gruppa teller til tre. Feil = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -648,7 +712,7 @@
   {
     "id": "challenge-7",
     "category": "challenge",
-    "templateText": "{player} sier tre kjendiser på 5 sekunder, ellers {sips}.",
+    "templateText": "{player} må fortelle en vits. Ingen ler = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -657,7 +721,7 @@
   {
     "id": "challenge-8",
     "category": "challenge",
-    "templateText": "{player} må high-five alle rundt seg på 7 sekunder eller {sips}.",
+    "templateText": "{player} skal stave navnet sitt baklengs. Feiler = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -666,7 +730,7 @@
   {
     "id": "challenge-9",
     "category": "challenge",
-    "templateText": "{player} tar en mini-planke i 15 sekunder eller drikker {sips}.",
+    "templateText": "{player} og {player2} spiller stein-saks-papir best av tre. Taper tar {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -675,7 +739,7 @@
   {
     "id": "challenge-10",
     "category": "challenge",
-    "templateText": "{player} forteller en dårlig vits. Ingen ler = {sips} slurker.",
+    "templateText": "{player} må ta en catwalk-runde. Nekter = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -684,7 +748,7 @@
   {
     "id": "challenge-11",
     "category": "challenge",
-    "templateText": "{player2} velger en emoji. {player} må mime den eller drikke {sips}.",
+    "templateText": "{player} må levere én refrenglinje med full innlevelse. Nekter = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -693,7 +757,7 @@
   {
     "id": "challenge-12",
     "category": "challenge",
-    "templateText": "{player} trommer en rytme på bordet. Feil gjentakelse gir {sips}.",
+    "templateText": "{player} skal nevne tre røde ting på 4 sekunder. Feil = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -702,7 +766,7 @@
   {
     "id": "challenge-13",
     "category": "challenge",
-    "templateText": "{player} sier fem norske byer raskt. Feil = {sips}.",
+    "templateText": "{player} må holde pokerface i 5 sekunder mens alle prøver å knekke hen. Smiler hen, {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -711,7 +775,7 @@
   {
     "id": "challenge-14",
     "category": "challenge",
-    "templateText": "{player} gjør sin beste kjendisimitering eller tar {sips}.",
+    "templateText": "{player} må si alfabetet til M uten stopp. Feil = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -720,16 +784,12 @@
   {
     "id": "challenge-15",
     "category": "challenge",
-    "templateText": "{player} må uttale \"ripsbærbusker\" tre ganger. Feil = {sips}.",
-    "params": {
-      "minSips": 2,
-      "maxSips": 4
-    }
+    "templateText": "{player2} velger en kategori. {player} må nevne tre ting i den på 3 sekunder, ellers {sips}."
   },
   {
     "id": "challenge-16",
     "category": "challenge",
-    "templateText": "{player} og {player2} spiller stein-saks-papir best av tre; taper tar {sips}.",
+    "templateText": "{player} må vise sin beste seiersgest. Hvis gruppa buer, ta {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -738,7 +798,7 @@
   {
     "id": "challenge-17",
     "category": "challenge",
-    "templateText": "{player} lager et rim på \"fest\" innen 5 sekunder eller {sips}.",
+    "templateText": "{player} skal ta 8 air squats eller {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -747,7 +807,7 @@
   {
     "id": "challenge-18",
     "category": "challenge",
-    "templateText": "{player} må si et ord på F, L og S på 4 sekunder. Feil = {sips}.",
+    "templateText": "{player} må beskrive {player2} som en superhelt på 5 sekunder. Feil = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -756,7 +816,7 @@
   {
     "id": "challenge-19",
     "category": "challenge",
-    "templateText": "{player} tar en catwalk-runde eller drikker {sips}.",
+    "templateText": "{player} skal balansere på ett bein til gruppa teller til 8. Feil = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -765,7 +825,7 @@
   {
     "id": "challenge-20",
     "category": "challenge",
-    "templateText": "{player} holder latteren i 10 sekunder mens andre prøver å få hen til å le. Feil = {sips}.",
+    "templateText": "{player} må si tre ting hen aldri ville tatt med på date. Stopp = {sips}.",
     "params": {
       "minSips": 2,
       "maxSips": 4
@@ -774,129 +834,121 @@
   {
     "id": "social-1",
     "category": "social",
-    "templateText": "{player} sier hvem som ville overlevd en zombieapokalypse. Den personen gir 1 slurk."
+    "templateText": "{player} sier hvem som er farligst på nach. Den personen må forsvare seg eller ta 1."
   },
   {
     "id": "social-2",
     "category": "social",
-    "templateText": "{player} forteller sin beste festhistorie. Hvis gruppa vil høre mer: {player2} drikker {sips}.",
+    "templateText": "Pekelek: Alle peker på den mest kaotiske i rommet. Flest pek tar {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "social-3",
     "category": "social",
-    "templateText": "{player} beskriver {player2} med tre ord."
+    "templateText": "{player} sier hvem som burde få kontroll over musikken akkurat nå, og hvorfor."
   },
   {
     "id": "social-4",
     "category": "social",
-    "templateText": "{player} nevner en guilty pleasure. Alle som deler den tar 1 slurk."
+    "templateText": "{player} og {player2} må gi hverandre en altfor seriøs toast."
   },
   {
     "id": "social-5",
     "category": "social",
-    "templateText": "{player} sier hvem som er mest spontan. Den personen tar {sips}.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "{player} sier en green flag hos {player2}."
   },
   {
     "id": "social-6",
     "category": "social",
-    "templateText": "{player} og {player2} deler et fun fact hver."
+    "templateText": "{player} deler en liten hemmelighet om seg selv. Nekter = {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "social-7",
     "category": "social",
-    "templateText": "{player} velger \"sannhet\" for {player2}. Nekter = {sips} slurker.",
+    "templateText": "{player} velger: et ærlig spørsmål til {player2}, eller {player2} tar {sips}.",
     "params": {
       "minSips": 1,
-      "maxSips": 4
+      "maxSips": 3
     }
   },
   {
     "id": "social-8",
     "category": "social",
-    "templateText": "{player} spør gruppa: \"hvem er mest sannsynlig til å sovne først?\""
+    "templateText": "{player} må kåre kveldens hovedperson så langt og gi en grunn."
   },
   {
     "id": "social-9",
     "category": "social",
-    "templateText": "{player} gir et kompliment til {player2}. Hvis det er svakt: {player} tar {sips}.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "Pekelek: Alle peker på den som ville vært verst å sende på handletur. Flest pek tar {sips}."
   },
   {
     "id": "social-10",
     "category": "social",
-    "templateText": "{player} deler siste bilde i kamerarullen (beskriv, ikke vis)."
+    "templateText": "{player} deler en kontroversiell mening. Hvis gruppa er enig, tar {player} 1."
   },
   {
     "id": "social-11",
     "category": "social",
-    "templateText": "{player} spør: \"hvem har best dansemoves?\" Flest stemmer gir 1 slurk ut."
+    "templateText": "{player} beskriver førsteinntrykket sitt av {player2} med tre ord."
   },
   {
     "id": "social-12",
     "category": "social",
-    "templateText": "{player} og {player2} bytter plass og skåler."
+    "templateText": "Pekelek: Alle peker på den som mest sannsynlig starter allsang i kveld. Flest pek tar {sips}."
   },
   {
     "id": "social-13",
     "category": "social",
-    "templateText": "{player} nevner en ting hen vil gjøre i år. Alle som heier tar 1 slurk."
+    "templateText": "{player} velger hvem som er mest sus og hvem som er mest kontroll."
   },
   {
     "id": "social-14",
     "category": "social",
-    "templateText": "{player} velger en toast for bordet."
+    "templateText": "Dilemma: {player} velger mellom å aldri kunne sende voice igjen eller aldri kunne skippe kø. Begrunn valget.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "social-15",
     "category": "social",
-    "templateText": "{player} sier en hemmelighet-light. Hvis pass: {sips} slurker.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "{player} må gi et ekte kompliment til spilleren til høyre."
   },
   {
     "id": "social-16",
     "category": "social",
-    "templateText": "{player} gir en shoutout til en venn i rommet."
+    "templateText": "{player} sier hvem som hadde overlevd lengst i reality-TV, og hvem som hadde røket ut først."
   },
   {
     "id": "social-17",
     "category": "social",
-    "templateText": "{player2} stiller et ja/nei-spørsmål til {player}. Feil/vegring = {sips}.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "{player} og {player2} må bli enige om hvem som lyver best."
   },
   {
     "id": "social-18",
     "category": "social",
-    "templateText": "{player} velger tema for neste småprat i 1 minutt."
+    "templateText": "{player} stiller gruppa et spørsmål ingen får svare seriøst på. Første seriøse svar tar {sips}."
   },
   {
     "id": "social-19",
     "category": "social",
-    "templateText": "{player} sier hvem som burde velge neste sang."
+    "templateText": "{player} kårer mest sannsynlig til å forsvinne på byen. Den personen tar {sips}.",
+    "params": {
+      "minSips": 1,
+      "maxSips": 3
+    }
   },
   {
     "id": "social-20",
     "category": "social",
-    "templateText": "{player} og {player2} gjør en synkron skål og tar {sips}.",
-    "params": {
-      "minSips": 1,
-      "maxSips": 4
-    }
+    "templateText": "{player} sier hvem som burde få makta over musikken neste halvtime. Gruppen avgjør med tommel opp eller ned."
   }
 ]
