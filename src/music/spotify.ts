@@ -122,7 +122,7 @@ async function postSpotifyToken(
 }
 
 function randomString(length: number): string {
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const bytes = globalThis.crypto.getRandomValues(new Uint8Array(length));
   let result = '';
 
