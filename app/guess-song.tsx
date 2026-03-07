@@ -451,8 +451,8 @@ export default function GuessSongScreen() {
 
 const styles = StyleSheet.create({
   heroCard: {
-    backgroundColor: '#111A2A99',
-    borderColor: '#3A547E88',
+    backgroundColor: '#0D0A1499',
+    borderColor: '#3D2A5088',
     borderWidth: 1,
     borderRadius: theme.radius.lg,
     padding: theme.spacing.md,
@@ -470,8 +470,8 @@ const styles = StyleSheet.create({
   },
   section: {
     gap: theme.spacing.sm,
-    backgroundColor: '#10192A9E',
-    borderColor: '#3F5A8488',
+    backgroundColor: '#0D0A149E',
+    borderColor: '#3D2A5088',
     borderWidth: 1,
     borderRadius: theme.radius.lg,
     padding: theme.spacing.md,
@@ -487,8 +487,8 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   infoCard: {
-    backgroundColor: '#111A2A9E',
-    borderColor: '#3C5A8788',
+    backgroundColor: '#0D0A149E',
+    borderColor: '#3D2A5088',
     borderWidth: 1,
     borderRadius: theme.radius.lg,
     padding: theme.spacing.md,
@@ -518,16 +518,16 @@ const styles = StyleSheet.create({
   playlistChip: {
     borderRadius: theme.radius.md,
     borderWidth: 1,
-    borderColor: '#4A638A88',
-    backgroundColor: '#17243BC9',
+    borderColor: '#3D2A5088',
+    backgroundColor: '#12081AC9',
     paddingHorizontal: 12,
     paddingVertical: 10,
     minWidth: 140,
     gap: 4,
   },
   playlistChipSelected: {
-    borderColor: '#75EAFF',
-    backgroundColor: '#19304BCC',
+    borderColor: '#FF33CC',
+    backgroundColor: '#1A0D20CC',
   },
   playlistName: {
     color: theme.colors.text,
@@ -535,15 +535,15 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   playlistNameSelected: {
-    color: '#D6F6FF',
+    color: '#FFD6F0',
   },
   playlistMeta: {
     color: theme.colors.mutedText,
     fontSize: 12,
   },
   roundCard: {
-    backgroundColor: '#101A2DAB',
-    borderColor: '#48689A88',
+    backgroundColor: '#0D0A14AB',
+    borderColor: '#3D2A5088',
     borderWidth: 1,
     borderRadius: theme.radius.lg,
     padding: theme.spacing.md,
@@ -561,18 +561,18 @@ const styles = StyleSheet.create({
     lineHeight: 26,
   },
   penaltyText: {
-    color: '#A8B7D6',
+    color: '#9B8EAD',
     fontSize: 14,
     fontWeight: '700',
   },
   revealText: {
-    color: '#B9FFF2',
+    color: '#FF99E0',
     fontSize: 18,
     fontWeight: '800',
     lineHeight: 26,
   },
   infoBanner: {
-    color: '#B9FFF2',
+    color: '#FF99E0',
     fontSize: 14,
     fontWeight: '700',
     textAlign: 'center',

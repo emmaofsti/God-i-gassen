@@ -28,12 +28,18 @@ const modeOptions: { mode: GameMode; title: string; subtitle: string }[] = [
     title: 'Gjett Sangen',
     subtitle: 'Spotify + auto-stopp på rop. En egen spillmodus med mic-trigger.',
   },
+  {
+    mode: 'bomba',
+    title: 'Bomba',
+    subtitle: 'Still en skjult timer. Spinn hjulet og send telefonen videre før bomben smeller!',
+  },
 ];
 
-function gameRoute(mode: GameMode): '/card-game' | '/wheel-game' | '/guess-song' | '/music-game' {
+function gameRoute(mode: GameMode): '/card-game' | '/wheel-game' | '/guess-song' | '/music-game' | '/bomba-game' {
   if (mode === 'cards') return '/card-game';
   if (mode === 'wheel') return '/wheel-game';
   if (mode === 'guess-song') return '/guess-song';
+  if (mode === 'bomba') return '/bomba-game';
   return '/music-game';
 }
 
@@ -183,7 +189,7 @@ const styles = StyleSheet.create({
   },
   beerTint: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#06090F',
+    backgroundColor: '#050508',
   },
   beerFlood: {
     position: 'absolute',
@@ -191,20 +197,20 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     overflow: 'hidden',
-    backgroundColor: '#B46A05',
+    backgroundColor: '#CC0066',
     borderTopWidth: 2,
-    borderTopColor: '#FFD48A',
+    borderTopColor: '#FF33CC',
   },
   foamBand: {
     height: 34,
-    backgroundColor: '#FFE4B8',
+    backgroundColor: '#FF33CC',
     borderBottomWidth: 1,
-    borderBottomColor: '#F6C982',
+    borderBottomColor: '#CC0066',
     justifyContent: 'center',
     alignItems: 'center',
   },
   foamText: {
-    color: '#6A3E00',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '900',
     letterSpacing: 1.3,

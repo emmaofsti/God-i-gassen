@@ -9,11 +9,11 @@ const navTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    background: '#070A12',
-    card: '#070A12',
-    border: '#31415E',
-    text: '#F7FAFF',
-    primary: '#25F4EE',
+    background: '#050508',
+    card: '#050508',
+    border: '#2A1F35',
+    text: '#F5F0FF',
+    primary: '#FF33CC',
     notification: '#FF5D73',
   },
 };
@@ -24,9 +24,9 @@ export default function RootLayout() {
       <ThemeProvider value={navTheme}>
         <Stack
           screenOptions={{
-            headerStyle: { backgroundColor: '#070A12' },
-            headerTintColor: '#F7FAFF',
-            contentStyle: { backgroundColor: '#070A12' },
+            headerStyle: { backgroundColor: '#050508' },
+            headerTintColor: '#F5F0FF',
+            contentStyle: { backgroundColor: '#050508' },
             headerShadowVisible: false,
             headerTitleStyle: { fontWeight: '800' },
           }}
@@ -36,6 +36,7 @@ export default function RootLayout() {
           <Stack.Screen name="card-game" options={{ title: 'Kortspill' }} />
           <Stack.Screen name="wheel-game" options={{ title: 'Spin The Wheel' }} />
           <Stack.Screen name="guess-song" options={{ title: 'Gjett Sangen' }} />
+          <Stack.Screen name="bomba-game" options={{ title: 'Bomba' }} />
           <Stack.Screen name="music-game" options={{ title: 'Music Game' }} />
           <Stack.Screen name="settings" options={{ title: 'Innstillinger' }} />
         </Stack>
@@ -66,7 +67,7 @@ export function ErrorBoundary(props: { error: Error; retry: () => void }) {
 const styles = StyleSheet.create({
   errorScreen: {
     flex: 1,
-    backgroundColor: '#070A12',
+    backgroundColor: '#050508',
     justifyContent: 'center',
     padding: 24,
   },
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     borderWidth: 1,
     borderColor: '#5E2A3A',
-    backgroundColor: '#1A1017',
+    backgroundColor: '#1A0D14',
     padding: 20,
     gap: 12,
   },
@@ -96,13 +97,13 @@ const styles = StyleSheet.create({
   errorButton: {
     minHeight: 56,
     borderRadius: 16,
-    backgroundColor: '#FF5D73',
+    backgroundColor: '#FF33CC',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 4,
   },
   errorButtonText: {
-    color: '#14060A',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '900',
   },

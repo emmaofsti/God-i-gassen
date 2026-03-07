@@ -32,7 +32,7 @@ export function PrimaryButton({ title, onPress, disabled = false, style }: Props
 const styles = StyleSheet.create({
   shell: {
     borderRadius: theme.radius.md,
-    shadowColor: '#24F4ED',
+    shadowColor: '#FF33CC',
     shadowOpacity: 0.45,
     shadowRadius: 18,
     shadowOffset: { width: 0, height: 0 },
@@ -53,10 +53,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 62,
     borderWidth: 1,
-    borderColor: '#DFFFFF66',
+    borderColor: '#FF99E066',
   },
   text: {
-    color: '#05151C',
+    color: '#FFFFFF',
     fontWeight: '900',
     fontSize: 18,
     letterSpacing: 0.6,

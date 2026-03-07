@@ -27,8 +27,8 @@ export function SecondaryButton({ title, onPress, style, danger = false }: Props
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#121A2A99',
-    borderColor: '#4B5D8155',
+    backgroundColor: '#0D0A1499',
+    borderColor: '#3D2A5055',
     borderWidth: 1,
     borderRadius: theme.radius.md,
     paddingVertical: 16,

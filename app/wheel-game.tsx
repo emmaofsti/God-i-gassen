@@ -16,7 +16,7 @@ import { WheelSegment } from '@/src/types/game';
 const segments = wheelData as WheelSegment[];
 const COOLDOWN_MS = 1500;
 
-const wheelPalette = ['#56D1FF', '#A995FF', '#FF7AE1', '#80F7A5', '#FFC979', '#95B9FF'];
+const wheelPalette = ['#FF33CC', '#FFCC66', '#33CCFF', '#33FFCC', '#CC0066', '#CC9966'];
 
 export default function WheelGameScreen() {
   const router = useRouter();
@@ -178,15 +178,15 @@ const styles = StyleSheet.create({
   },
   ringGlow: {
     position: 'absolute',
-    backgroundColor: '#2AF1EA22',
-    shadowColor: '#2FF5ED',
+    backgroundColor: '#FF33CC18',
+    shadowColor: '#FF33CC',
     shadowOpacity: 0.5,
     shadowRadius: 25,
     shadowOffset: { width: 0, height: 0 },
   },
   wheel: {
-    backgroundColor: '#111A2D',
-    borderColor: '#5D7DB4A0',
+    backgroundColor: '#0D0A14',
+    borderColor: '#5A307AA0',
     borderWidth: 6,
     alignItems: 'center',
     justifyContent: 'center',
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     minHeight: 34,
     borderRadius: theme.radius.sm,
     borderWidth: 1,
-    backgroundColor: '#0E1523',
+    backgroundColor: '#0A0610',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 4,
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     borderRightColor: 'transparent',
     borderBottomColor: theme.colors.accent,
     zIndex: 10,
-    shadowColor: '#2CF4EC',
+    shadowColor: '#FF33CC',
     shadowOpacity: 0.8,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 0 },
@@ -230,24 +230,24 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 26,
-    backgroundColor: '#24456E',
+    backgroundColor: '#2A1040',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: '#8FC8FF',
+    borderColor: '#FF33CC',
   },
   hubInner: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#26F3EB',
+    backgroundColor: '#FFCC66',
   },
   bottomArea: {
     marginTop: theme.spacing.xs,
   },
   resultCard: {
-    backgroundColor: '#10192A99',
-    borderColor: '#45608988',
+    backgroundColor: '#0D0A1499',
+    borderColor: '#3D2A5088',
     borderWidth: 1,
     borderRadius: theme.radius.lg,
     padding: theme.spacing.md,

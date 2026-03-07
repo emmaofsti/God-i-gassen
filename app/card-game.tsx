@@ -93,7 +93,7 @@ export default function CardGameScreen() {
 
       <Pressable style={styles.cardPressArea} onPress={nextCard} {...panResponder.panHandlers}>
         {currentCard ? (
-          <LinearGradient colors={['#13243A', '#13142D']} style={styles.card}>
+          <LinearGradient colors={['#140A1E', '#0D0814']} style={styles.card}>
             <View style={[styles.categoryChip, { backgroundColor: categoryColor[currentCard.category] }]}>
               <Text style={styles.categoryText}>{categoryLabel[currentCard.category]}</Text>
             </View>
@@ -137,11 +137,11 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#4A5B8277',
+    borderColor: '#3D2A5077',
     borderRadius: theme.radius.xl,
     padding: theme.spacing.md,
     justifyContent: 'space-between',
-    shadowColor: '#6B90FF',
+    shadowColor: '#FF33CC',
     shadowOpacity: 0.28,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 8 },
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius.pill,
   },
   categoryText: {
-    color: '#0B1320',
+    color: '#0A0610',
     fontWeight: '900',
     fontSize: 12,
     letterSpacing: 0.3,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     marginTop: theme.spacing.md,
   },
   gestureHint: {
-    color: '#A5B3D4',
+    color: '#8B7A9E',
     fontSize: 12,
     fontWeight: '700',
   },

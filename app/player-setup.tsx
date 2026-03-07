@@ -21,6 +21,9 @@ function nextGameRoute(mode: GameMode) {
   if (mode === 'guess-song') {
     return '/guess-song';
   }
+  if (mode === 'bomba') {
+    return '/bomba-game';
+  }
   return '/music-game';
 }
 
@@ -133,9 +136,9 @@ export default function PlayerSetupScreen() {
 
 const styles = StyleSheet.create({
   headerCard: {
-    backgroundColor: '#111A2A99',
+    backgroundColor: '#0D0A1499',
     borderWidth: 1,
-    borderColor: '#37507A66',
+    borderColor: '#2A1F3566',
     borderRadius: theme.radius.lg,
     padding: theme.spacing.md,
     gap: theme.spacing.xs,
@@ -151,15 +154,15 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   modeHint: {
-    color: '#9EF6E3',
+    color: '#FF99E0',
     fontSize: 13,
     fontWeight: '700',
     marginTop: 4,
   },
   inputCard: {
-    backgroundColor: '#101726AA',
+    backgroundColor: '#0D0A14AA',
     borderWidth: 1,
-    borderColor: '#30405D77',
+    borderColor: '#2A1F3577',
     borderRadius: theme.radius.lg,
     padding: theme.spacing.md,
     gap: theme.spacing.sm,
@@ -171,10 +174,10 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    backgroundColor: '#0E1422',
+    backgroundColor: '#0A0610',
     borderRadius: theme.radius.md,
     borderWidth: 1,
-    borderColor: '#364765',
+    borderColor: '#2A1F35',
     color: theme.colors.text,
     fontSize: 18,
     paddingHorizontal: 14,
@@ -187,7 +190,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#2DF4ED',
+    shadowColor: '#FF33CC',
     shadowOpacity: 0.4,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 0 },
@@ -200,7 +203,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0,
   },
   addButtonText: {
-    color: '#07181E',
+    color: '#FFFFFF',
     fontSize: 15,
     fontWeight: '900',
     letterSpacing: 0.5,
@@ -217,9 +220,9 @@ const styles = StyleSheet.create({
     gap: theme.spacing.sm,
   },
   playerRow: {
-    backgroundColor: '#121A2A',
+    backgroundColor: '#0D0A14',
     borderWidth: 1,
-    borderColor: '#2E425F77',
+    borderColor: '#2A1F3577',
     borderRadius: theme.radius.lg,
     padding: theme.spacing.md,
     gap: theme.spacing.sm,
@@ -239,8 +242,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     borderRadius: theme.radius.md,
     borderWidth: 1,
-    borderColor: '#3A537A',
-    backgroundColor: '#101829',
+    borderColor: '#3D2A50',
+    backgroundColor: '#0D0A14',
     alignItems: 'center',
     justifyContent: 'center',
   },

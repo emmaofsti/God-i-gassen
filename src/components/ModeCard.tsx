@@ -17,6 +17,7 @@ const modeTag: Record<GameMode, string> = {
   wheel: 'RANDOM',
   'guess-song': 'VOICE',
   music: 'SPOTIFY',
+  bomba: 'BOMBA',
 };
 
 export function ModeCard({ title, subtitle, mode, selectedMode, onSelect }: Props) {
@@ -46,16 +47,16 @@ const styles = StyleSheet.create({
   cardShell: {
     overflow: 'hidden',
     borderRadius: theme.radius.lg,
-    backgroundColor: '#11192A99',
-    borderColor: '#34436177',
+    backgroundColor: '#0D0A1499',
+    borderColor: '#2A1F3577',
     borderWidth: 1,
     padding: theme.spacing.md,
     minHeight: 138,
     gap: theme.spacing.sm,
   },
   cardShellSelected: {
-    borderColor: '#7BE9FFAA',
-    shadowColor: '#2CF4EC',
+    borderColor: '#FF33CCAA',
+    shadowColor: '#FF33CC',
     shadowOpacity: 0.25,
     shadowRadius: 14,
     shadowOffset: { width: 0, height: 0 },
@@ -67,14 +68,14 @@ const styles = StyleSheet.create({
   },
   tagWrap: {
     borderRadius: theme.radius.pill,
-    backgroundColor: '#203252BB',
+    backgroundColor: '#1A0D20BB',
     borderWidth: 1,
-    borderColor: '#5B8ED944',
+    borderColor: '#FF33CC33',
     paddingHorizontal: 10,
     paddingVertical: 4,
   },
   tag: {
-    color: '#8FB8FF',
+    color: '#FFCC66',
     fontSize: 11,
     fontWeight: '900',
     letterSpacing: 1,
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     height: 18,
     borderRadius: theme.radius.pill,
     borderWidth: 2,
-    borderColor: '#6D82AC',
+    borderColor: '#5A4070',
   },
   dotSelected: {
     backgroundColor: theme.colors.accent,

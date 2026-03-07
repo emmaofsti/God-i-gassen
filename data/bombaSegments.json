@@ -1,0 +1,47 @@
+[
+  {
+    "id": "bomba-1",
+    "label": "Ta en slurk",
+    "ruleText": "Du tar en slurk."
+  },
+  {
+    "id": "bomba-2",
+    "label": "Spinn igjen",
+    "ruleText": "Spinn hjulet en gang til!"
+  },
+  {
+    "id": "bomba-3",
+    "label": "Gi tlf til venstre",
+    "ruleText": "Gi telefonen til personen til venstre for deg."
+  },
+  {
+    "id": "bomba-4",
+    "label": "Gi tlf til høyre",
+    "ruleText": "Gi telefonen til personen til høyre for deg."
+  },
+  {
+    "id": "bomba-5",
+    "label": "Valgfri spiller",
+    "ruleText": "Gi telefonen til en valgfri spiller."
+  },
+  {
+    "id": "bomba-6",
+    "label": "Chug 10 sek",
+    "ruleText": "Chug i 10 sekunder!"
+  },
+  {
+    "id": "bomba-7",
+    "label": "1,2,3 shot",
+    "ruleText": "1, 2, 3... SHOT!"
+  },
+  {
+    "id": "bomba-8",
+    "label": "Gi en slurk",
+    "ruleText": "Gi bort en slurk til en valgfri spiller."
+  },
+  {
+    "id": "bomba-9",
+    "label": "Ta 3 slurker",
+    "ruleText": "Du tar 3 slurker."
+  }
+]

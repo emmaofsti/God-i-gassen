@@ -1,4 +1,4 @@
-export type GameMode = 'cards' | 'wheel' | 'guess-song' | 'music';
+export type GameMode = 'cards' | 'wheel' | 'guess-song' | 'music' | 'bomba';
 
 export type CardCategory = 'drink' | 'give' | 'everyone' | 'rule' | 'challenge' | 'social';
 
