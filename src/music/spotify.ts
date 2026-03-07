@@ -107,7 +107,15 @@ async function postSpotifyToken(
   });
 
   if (!response.ok) {
-    throw new Error(`Spotify token-feil (${response.status})`);
+    let detail = '';
+    try {
+      const payload = (await response.json()) as { error?: string; error_description?: string };
+      detail = payload.error_description ?? payload.error ?? '';
+    } catch {
+      detail = await response.text();
+    }
+
+    throw new Error(`Spotify token-feil (${response.status})${detail ? `: ${detail}` : ''}`);
   }
 
   return (await response.json()) as SpotifyTokenPayload;
@@ -142,7 +150,38 @@ async function spotifyFetch<T>(accessToken: string, path: string): Promise<T> {
   });
 
   if (!response.ok) {
-    throw new Error(`Spotify API-feil (${response.status})`);
+    let detail = '';
+
+    try {
+      const payload = (await response.json()) as {
+        error?:
+          | string
+          | {
+              status?: number;
+              message?: string;
+            };
+      };
+
+      if (typeof payload.error === 'string') {
+        detail = payload.error;
+      } else if (payload.error?.message) {
+        detail = payload.error.message;
+      }
+    } catch {
+      detail = await response.text();
+    }
+
+    if (response.status === 401) {
+      throw new Error(`Spotify API-feil (401): token er ugyldig eller utløpt${detail ? ` - ${detail}` : ''}`);
+    }
+
+    if (response.status === 403) {
+      throw new Error(
+        `Spotify API-feil (403): tilgang nektet${detail ? ` - ${detail}` : ''}. Sjekk Spotify app settings og testbruker.`
+      );
+    }
+
+    throw new Error(`Spotify API-feil (${response.status})${detail ? `: ${detail}` : ''}`);
   }
 
   return (await response.json()) as T;
