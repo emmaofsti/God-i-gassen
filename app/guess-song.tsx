@@ -42,11 +42,8 @@ export default function GuessSongScreen() {
 
   const clientId = getSpotifyClientId();
   const redirectUri = useMemo(() => {
-    if (Platform.OS === 'web') {
-      if (typeof window !== 'undefined') {
-        return window.location.origin.replace('localhost', '127.0.0.1');
-      }
-      return 'http://127.0.0.1:8082';
+    if (Platform.OS === 'web' && typeof window !== 'undefined') {
+      return window.location.origin;
     }
 
     return AuthSession.makeRedirectUri({ scheme: 'godigassen', path: 'redirect' });
