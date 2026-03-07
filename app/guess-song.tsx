@@ -41,9 +41,24 @@ export default function GuessSongScreen() {
   const { players } = useGameSession();
 
   const clientId = getSpotifyClientId();
+
+  // Spotify only allows http://127.0.0.1:* as redirect URI (not localhost).
+  // Redirect so sessionStorage and redirect URI share the same origin.
+  useEffect(() => {
+    if (
+      Platform.OS === 'web' &&
+      typeof window !== 'undefined' &&
+      window.location.hostname === 'localhost'
+    ) {
+      window.location.replace(
+        window.location.href.replace('localhost', '127.0.0.1')
+      );
+    }
+  }, []);
+
   const redirectUri = useMemo(() => {
     if (Platform.OS === 'web' && typeof window !== 'undefined') {
-      return window.location.origin;
+      return window.location.origin.replace('localhost', '127.0.0.1');
     }
 
     return AuthSession.makeRedirectUri({ scheme: 'godigassen', path: 'redirect' });
