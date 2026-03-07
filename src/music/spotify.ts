@@ -211,11 +211,33 @@ export async function fetchSpotifyPlaylists(
   accessToken: string,
   limit = 20
 ): Promise<SpotifyPlaylist[]> {
-  const data = await spotifyFetch<{ items: SpotifyPlaylist[] }>(
+  const data = await spotifyFetch<{
+    items?: Array<
+      | {
+          id?: string | null;
+          name?: string | null;
+          tracks?: {
+            total?: number | null;
+          } | null;
+        }
+      | null
+    >;
+  }>(
     accessToken,
     `/me/playlists?limit=${limit}`
   );
-  return data.items;
+
+  return (data.items ?? [])
+    .filter((item): item is NonNullable<NonNullable<typeof data.items>[number]> => {
+      return !!item && typeof item.id === 'string' && typeof item.name === 'string';
+    })
+    .map((item) => ({
+      id: item.id!,
+      name: item.name!,
+      tracks: {
+        total: typeof item.tracks?.total === 'number' ? item.tracks.total : 0,
+      },
+    }));
 }
 
 export async function fetchSpotifyPlaylistTracks(
